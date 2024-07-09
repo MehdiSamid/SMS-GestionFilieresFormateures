@@ -1,6 +1,6 @@
 ﻿namespace SMS.Domain.Entities
 {
-    public class Filiere
+    public class Filiere : BaseEntity
     {
         public int FiliereID { get; set; }
         public string NomFiliere { get; set; }

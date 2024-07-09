@@ -5,9 +5,10 @@ namespace SMS.Domain.Interfaces
     public interface IFiliereRepository
     {
         Task<Filiere> AddAsync(Filiere filiere);
-        Task<Filiere> GetByIdAsync(int id);
+        Task<Filiere> GetByIdAsync(Guid id);
         Task<IEnumerable<Filiere>> GetAllAsync();
-        // Other methods as needed...
+        
+        Task<Filiere> DeleteAsync(Guid id);
     }
 
 }

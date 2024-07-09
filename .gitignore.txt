@@ -14,8 +14,11 @@
 # User-specific files (Mono Auto Generated)
 mono_crash.*
 
-# Mono auto generated files
-mono_crash.*
+# Project-specific files
+*.dbmdl
+*.dbproj.schemaview
+*.pfx
+*.publishsettings
 
 # Build results
 [Dd]ebug/
@@ -30,6 +33,4 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
-[Ll]ogs/
-
-# Uncomment if you have 
+.vs/
