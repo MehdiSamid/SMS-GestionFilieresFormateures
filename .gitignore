@@ -1,0 +1,45 @@
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Mono Auto Generated Files
+mono_crash.*
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# VS Code directories
+.vscode/
+.vscode-test/
+
+# Rider project files
+.idea/
+.idea_modules/
+.idea_Workspace.xml
+
+# Directory for build outputs
+bin/
+obj/
+.vs/
+TestResults/
+
+# Add additional directories
+SMS.Application/bin/
+SMS.Application/obj/
+SMS.Domain/bin/
+SMS.Domain/obj/
+SMS.Infrastructure/bin/
+SMS.Infrastructure/obj/
+SMS/bin/
+SMS/obj/
