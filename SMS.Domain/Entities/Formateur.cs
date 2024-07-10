@@ -2,7 +2,7 @@
 {
     public class Formateur : BaseEntity
     {
-        public int FormateurID { get; set; }
+        //public int FormateurID { get; set; }
         public string Nom { get; set; }
         public string Prenom { get; set; }
         public string Email { get; set; }

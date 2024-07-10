@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using SMS.Application.Mapping.SMS.Application.Mapping;
 using SMS.Infrastructure.HealthChecks;
+using SMS.Application.Commands;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +51,8 @@ builder.Services.AddSwaggerGen(c =>
 // Add Health Checks
 builder.Services.AddHealthChecks()
     .AddCheck<FiliereDbContextHealthCheck>("FiliereDbContext_Health_Check");
+
+
 
 var app = builder.Build();
 

@@ -32,6 +32,16 @@ namespace SMS.Infrastructure.Repositories
             return await _context.Filieres.ToListAsync();
         }
 
+        public Task<Filiere> GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Filiere> DeleteAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
         // Other CRUD methods...
     }
 

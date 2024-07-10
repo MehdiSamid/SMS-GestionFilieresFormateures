@@ -6,6 +6,7 @@ namespace SMS.Domain.Interfaces
     {
         Task<Formateur> AddAsync(Formateur formateur);
         Task<Formateur> GetByIdAsync(int id);
+        Task<Formateur> Update(int id);
         Task<IEnumerable<Formateur>> GetAllAsync();
         // Other methods as needed...
     }

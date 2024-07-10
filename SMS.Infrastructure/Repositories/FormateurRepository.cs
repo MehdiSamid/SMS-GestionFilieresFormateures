@@ -34,6 +34,13 @@ namespace SMS.Infrastructure.Repositories
             return await _context.Formateurs.ToListAsync();
         }
 
+        public Task<Formateur> Update(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
         // Other CRUD methods...
     }
 

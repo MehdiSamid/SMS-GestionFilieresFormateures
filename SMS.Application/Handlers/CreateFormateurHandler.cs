@@ -5,7 +5,7 @@ using SMS.Domain.Interfaces;
 
 namespace SMS.Application.Handlers
 {
-    public class CreateFormateurHandler : IRequestHandler<CreateFormateurCommand, int>
+    public class CreateFormateurHandler : IRequestHandler<CreateFormateurCommand, Guid>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -14,10 +14,11 @@ namespace SMS.Application.Handlers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<int> Handle(CreateFormateurCommand request, CancellationToken cancellationToken)
+        public async Task<Formateur> Handle(CreateFormateurCommand request, CancellationToken cancellationToken)
         {
             var formateur = new Formateur
             {
+                Id = Guid.NewGuid(),
                 Nom = request.Nom,
                 Prenom = request.Prenom,
                 Email = request.Email,
@@ -30,7 +31,12 @@ namespace SMS.Application.Handlers
             await _unitOfWork.FormateurRepository.AddAsync(formateur);
             await _unitOfWork.SaveChangesAsync();
 
-            return formateur.FormateurID;
+            return formateur;
+        }
+
+        Task<Guid> IRequestHandler<CreateFormateurCommand, Guid>.Handle(CreateFormateurCommand request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 
