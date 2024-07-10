@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SMS.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace SMS.Application.DTOs
 {
     namespace SMS.Application.DTOs
     {
-        public class FormateurDto
+        public class FormateurDto : BaseEntity
         {
             public Guid Id { get; set; }
             public string Nom { get; set; }

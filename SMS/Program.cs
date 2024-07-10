@@ -73,21 +73,5 @@ app.MapControllers();
 // Add Health Check endpoint
 app.MapHealthChecks("/health");
 
-ApplyMigration();
-
 app.Run();
 
-void ApplyMigration()
-{
-    using (var scope = app.Services.CreateScope())
-    {
-        var _Db = scope.ServiceProvider.GetRequiredService<FiliereDbContext>();
-        if (_Db != null)
-        {
-            if (_Db.Database.GetPendingMigrations().Any())
-            {
-                _Db.Database.Migrate();
-            }
-        }
-    }
-}

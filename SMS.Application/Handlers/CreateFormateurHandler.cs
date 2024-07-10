@@ -18,7 +18,6 @@ namespace SMS.Application.Handlers
         {
             var formateur = new Formateur
             {
-                Id = Guid.NewGuid(),
                 Nom = request.Nom,
                 Prenom = request.Prenom,
                 Email = request.Email,
