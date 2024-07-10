@@ -10,7 +10,7 @@ namespace SMS.Application.DTOs
     {
         public class FormateurDto
         {
-            public int FormateurID { get; set; }
+            public Guid Id { get; set; }
             public string Nom { get; set; }
             public string Prenom { get; set; }
             public string Email { get; set; }

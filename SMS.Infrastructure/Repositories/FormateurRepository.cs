@@ -24,7 +24,7 @@ namespace SMS.Infrastructure.Repositories
             return formateur;
         }
 
-        public async Task<Formateur> GetByIdAsync(int id)
+        public async Task<Formateur> GetByIdAsync(Guid id)
         {
             return await _context.Formateurs.FindAsync(id);
         }

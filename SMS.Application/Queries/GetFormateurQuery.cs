@@ -8,6 +8,6 @@ using System.Threading.Tasks;
 
 namespace SMS.Application.Queries
 {
-    public record GetFormateurQuery(int Id) : IRequest<Formateur>;
+    public record GetFormateurQuery(Guid Id) : IRequest<Formateur>;
 
 }
