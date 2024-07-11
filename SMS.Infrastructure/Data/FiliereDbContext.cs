@@ -6,6 +6,7 @@ public class FiliereDbContext : DbContext
 {
     public FiliereDbContext(DbContextOptions<FiliereDbContext> options) : base(options)
     {
+
     }
     public FiliereDbContext(DbSet<Formateur> formateurs, DbSet<Filiere> filieres)
     {
@@ -45,7 +46,6 @@ public class FiliereDbContext : DbContext
                     break;
             }
         }
-
         return base.SaveChanges();
     }
 

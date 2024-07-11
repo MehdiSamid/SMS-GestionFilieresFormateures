@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace SMS.Infrastructure.Repositories
 {
+    // SMS.Infrastructure/Repositories/FormateurRepository.cs
     public class FormateurRepository : IFormateurRepository
     {
         private readonly FiliereDbContext _context;
@@ -34,14 +35,18 @@ namespace SMS.Infrastructure.Repositories
             return await _context.Formateurs.ToListAsync();
         }
 
-        public Task<Formateur> Update(int id)
+        public async Task UpdateAsync(Formateur formateur)
         {
-            throw new NotImplementedException();
+            _context.Formateurs.Update(formateur);
+            await _context.SaveChangesAsync();
         }
 
-
+        public async Task DeleteAsync(Formateur formateur)
+        {
+            _context.Formateurs.Remove(formateur);
+            await _context.SaveChangesAsync();
+        }
 
         // Other CRUD methods...
     }
-
 }

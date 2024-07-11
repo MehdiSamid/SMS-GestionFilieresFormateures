@@ -2,13 +2,13 @@
 
 namespace SMS.Domain.Interfaces
 {
+    // SMS.Domain/Interfaces/IFormateurRepository.cs
     public interface IFormateurRepository
     {
         Task<Formateur> AddAsync(Formateur formateur);
         Task<Formateur> GetByIdAsync(Guid id);
-        Task<Formateur> Update(int id);
         Task<IEnumerable<Formateur>> GetAllAsync();
-        // Other methods as needed...
+        Task UpdateAsync(Formateur formateur);
+        Task DeleteAsync(Formateur formateur);
     }
-
 }
