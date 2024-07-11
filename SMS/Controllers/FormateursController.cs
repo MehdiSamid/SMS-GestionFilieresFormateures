@@ -33,7 +33,7 @@ namespace SMS.Controllers
             {
                 var formateur = _mapper.Map<Formateur>(formateurDto);
                 _formateurService.AddFormateur(formateur);
-                return CreatedAtAction(nameof(GetFormateurs), new { id = formateur.Id }, formateurDto);
+                return CreatedAtAction(nameof(GetFormateurs), new { Id = formateur }, formateurDto);
             }
 
             // Other action methods

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SMS.Domain.Entities;
+using System.Linq;
 
 public class FiliereDbContext : DbContext
 {
@@ -13,8 +14,6 @@ public class FiliereDbContext : DbContext
         Filieres = filieres;
         Secteur = secteurs;
     }
-
-    // DbSet properties...
     public DbSet<Formateur> Formateurs { get; set; }
     public DbSet<Filiere> Filieres { get; set; }
     public DbSet<Secteur> Secteur { get; set; }
@@ -36,14 +35,17 @@ public class FiliereDbContext : DbContext
             switch (entityEntry.State)
             {
                 case EntityState.Added:
-                    baseEntity.CreatedAt = DateTime.Now;
+                    baseEntity.CreatedAt = DateTime.UtcNow;
+                    baseEntity.CreatedBy = GetCurrentUserId(); // Replace with logic to get the current user ID
                     break;
                 case EntityState.Modified:
-                    baseEntity.UpdatedAt = DateTime.Now;
+                    baseEntity.UpdatedAt = DateTime.UtcNow;
+                    baseEntity.ModifiedBy = GetCurrentUserId(); // Replace with logic to get the current user ID
                     break;
                 case EntityState.Deleted:
-                    baseEntity.DeletedAt = DateTime.Now;
+                    baseEntity.DeletedAt = DateTime.UtcNow;
                     baseEntity.IsDeleted = true;
+                    baseEntity.DeletedBy = GetCurrentUserId(); // Replace with logic to get the current user ID
                     entityEntry.State = EntityState.Modified; // Ensure the entity is not removed from the database
                     break;
             }
@@ -51,6 +53,7 @@ public class FiliereDbContext : DbContext
 
         return base.SaveChanges();
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Formateur>().HasQueryFilter(e => !e.IsDeleted);
@@ -60,5 +63,9 @@ public class FiliereDbContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
 
+    private string? GetCurrentUserId()
+    {
+        // Implement logic to get the current user's ID or return null if not available
+        return "system"; // Example value, replace with actual logic
+    }
 }
-

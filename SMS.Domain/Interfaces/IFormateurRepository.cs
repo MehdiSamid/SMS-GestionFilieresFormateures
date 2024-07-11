@@ -5,7 +5,7 @@ namespace SMS.Domain.Interfaces
     public interface IFormateurRepository
     {
         Task<Formateur> AddAsync(Formateur formateur);
-        Task<Formateur> GetByIdAsync(int id);
+        Task<Formateur> GetByIdAsync(Guid id);
         Task<Formateur> Update(int id);
         Task<IEnumerable<Formateur>> GetAllAsync();
         // Other methods as needed...
