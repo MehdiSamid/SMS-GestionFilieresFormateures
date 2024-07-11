@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 
 namespace SMS.Infrastructure.Repositories
 {
-    public class FiliereRepository : IFiliereRepository
+    public class FiliereRepository : FiliereRepositoryBase, IFiliereRepository
     {
         private readonly FiliereDbContext _context;
 
@@ -22,27 +22,31 @@ namespace SMS.Infrastructure.Repositories
             return filiere;
         }
 
-        public async Task<Filiere> GetByIdAsync(int id)
-        {
-            return await _context.Filieres.FindAsync(id);
-        }
-
         public async Task<IEnumerable<Filiere>> GetAllAsync()
         {
             return await _context.Filieres.ToListAsync();
+        }
+
+        public async Task<Filiere> DeleteAsync(Guid id)
+        {
+            var filiereToDelete = await _context.Filieres.FindAsync(id);
+
+            if (filiereToDelete != null)
+            {
+                _context.Filieres.Remove(filiereToDelete);
+                await _context.SaveChangesAsync();
+            }
+
+            return filiereToDelete;
         }
 
         public Task<Filiere> GetByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
-
-        public Task<Filiere> DeleteAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        // Other CRUD methods...
     }
 
+    public class FiliereRepositoryBase
+    {
+    }
 }

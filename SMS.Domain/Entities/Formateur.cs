@@ -1,7 +1,10 @@
-﻿namespace SMS.Domain.Entities
+﻿
+namespace SMS.Domain.Entities
 {
     public class Formateur : BaseEntity
     {
+        public Guid Id;
+
         //public int FormateurID { get; set; }
         public string Nom { get; set; }
         public string Prenom { get; set; }

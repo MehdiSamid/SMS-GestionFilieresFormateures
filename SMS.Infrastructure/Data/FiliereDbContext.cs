@@ -7,15 +7,17 @@ public class FiliereDbContext : DbContext
     {
     }
 
-    public FiliereDbContext(DbSet<Formateur> formateurs, DbSet<Filiere> filieres)
+    public FiliereDbContext(DbSet<Formateur> formateurs, DbSet<Filiere> filieres, DbSet<Secteur> secteurs)
     {
         Formateurs = formateurs;
         Filieres = filieres;
+        Secteur = secteurs;
     }
 
     // DbSet properties...
     public DbSet<Formateur> Formateurs { get; set; }
     public DbSet<Filiere> Filieres { get; set; }
+    public DbSet<Secteur> Secteur { get; set; }
     //public DbSet<AttributionFormateur> AttributionsFormateurs { get; set; }
     //public DbSet<Presence> Presences { get; set; }
 
@@ -53,6 +55,7 @@ public class FiliereDbContext : DbContext
     {
         modelBuilder.Entity<Formateur>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Filiere>().HasQueryFilter(e => !e.IsDeleted);
+        //modelBuilder.Entity<Secteur>().HasQueryFilter(e => !e.IsDeleted);
 
         base.OnModelCreating(modelBuilder);
     }
