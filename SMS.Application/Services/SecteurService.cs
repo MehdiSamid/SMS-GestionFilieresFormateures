@@ -25,10 +25,10 @@ namespace SMS.Application.Services
             return _context.Secteur.ToList();
         }
 
-        public Secteur GetSecteurById(int id)
-        {
-            return _context.Secteur.FirstOrDefault(s => s.Id == id);
-        }
+        //public Secteur GetSecteurById(int id)
+        //{
+        //    //return _context.Secteur.FirstOrDefault(s => s.Id == id);
+        //}
 
         public void AddSecteur(Secteur secteur)
         {

@@ -14,21 +14,20 @@ namespace SMS.Infrastructure.Repositories
         {
             _secteurs = new List<Secteur>();
             // Initialize with some sample data if needed
-            _secteurs.Add(new Secteur { Id = 1, Name = "Technology" });
-            _secteurs.Add(new Secteur { Id = 2, Name = "Finance" });
+            
         }
 
         public async Task<Secteur> AddAsync(Secteur secteur)
         {
-            secteur.Id = _secteurs.Count > 0 ? _secteurs.Max(s => s.Id) + 1 : 1;
+            
             _secteurs.Add(secteur);
             return await Task.FromResult(secteur);
         }
 
-        public async Task<Secteur> GetByIdAsync(int id)
-        {
-            return await Task.FromResult(_secteurs.FirstOrDefault(s => s.Id == id));
-        }
+        //public async Task<Secteur> GetByIdAsync(int id)
+        //{
+        //    return await Task.FromResult(_secteurs.FirstOrDefault(s => s.Id =));
+        //}
 
         public async Task<IEnumerable<Secteur>> GetAllAsync()
         {
@@ -48,12 +47,17 @@ namespace SMS.Infrastructure.Repositories
 
         public async Task DeleteAsync(int id)
         {
-            var secteurToDelete = _secteurs.FirstOrDefault(s => s.Id == id);
-            if (secteurToDelete != null)
-            {
-                _secteurs.Remove(secteurToDelete);
-            }
-            await Task.CompletedTask; // Or you can use Task.FromResult if returning a value
+            //var secteurToDelete = _secteurs.FirstOrDefault(s => s.Id == id);
+            //if (secteurToDelete != null)
+            //{
+            //    _secteurs.Remove(secteurToDelete);
+            //}
+            //await Task.CompletedTask; // Or you can use Task.FromResult if returning a value
+        }
+
+        public Task<Secteur> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
         }
 
         // Implement other methods as needed (specific queries, etc.)
