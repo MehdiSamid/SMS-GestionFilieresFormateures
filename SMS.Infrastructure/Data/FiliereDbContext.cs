@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SMS.Domain.Entities;
-using System.Linq;
 
 public class FiliereDbContext : DbContext
 {
@@ -8,18 +7,12 @@ public class FiliereDbContext : DbContext
     {
     }
 
-    public FiliereDbContext(DbSet<Formateur> formateurs, DbSet<Filiere> filieres, DbSet<Secteur> secteurs)
-    {
-        Formateurs = formateurs;
-        Filieres = filieres;
-        Secteur = secteurs;
-    }
+    // Define DbSets for each entity
     public DbSet<Formateur> Formateurs { get; set; }
     public DbSet<Filiere> Filieres { get; set; }
-    public DbSet<Secteur> Secteur { get; set; }
-    //public DbSet<AttributionFormateur> AttributionsFormateurs { get; set; }
-    //public DbSet<Presence> Presences { get; set; }
+    public DbSet<Secteur> Secteurs { get; set; }
 
+    // Override SaveChanges to implement auditing
     public override int SaveChanges()
     {
         var entries = ChangeTracker
@@ -54,15 +47,17 @@ public class FiliereDbContext : DbContext
         return base.SaveChanges();
     }
 
+    // Override OnModelCreating to configure entity behaviors
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Formateur>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Filiere>().HasQueryFilter(e => !e.IsDeleted);
-        //modelBuilder.Entity<Secteur>().HasQueryFilter(e => !e.IsDeleted);
+        // modelBuilder.Entity<Secteur>().HasQueryFilter(e => !e.IsDeleted); // Uncomment if needed
 
         base.OnModelCreating(modelBuilder);
     }
 
+    // Example method to get current user ID
     private string? GetCurrentUserId()
     {
         // Implement logic to get the current user's ID or return null if not available

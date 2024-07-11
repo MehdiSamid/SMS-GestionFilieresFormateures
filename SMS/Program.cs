@@ -8,21 +8,23 @@ using SMS.Application.Services;
 using System.Reflection;
 using System;
 using System.IO;
+using SMS.Application.Commands;
+using SMS.Domain.Interfaces;
+using SMS.Infrastructure.Repositories;
 using SMS.Application.Mapping.SMS.Application.Mapping;
 using SMS.Infrastructure.HealthChecks;
-using SMS.Application.Commands;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 
-// Configure DbContext
 // Configure DbContext with SQL Server
 builder.Services.AddDbContext<FiliereDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         b => b.MigrationsAssembly("SMS.Infrastructure")));
+
 // Register AutoMapper
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
@@ -31,6 +33,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.G
 
 // Register Application Services
 builder.Services.AddScoped<FormateurService>();
+builder.Services.AddScoped<ISecteurRepository, SecteurRepository>(); // Register ISecteurRepository
 
 // Enable Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -52,8 +55,6 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddHealthChecks()
     .AddCheck<FiliereDbContextHealthCheck>("FiliereDbContext_Health_Check");
 
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -74,4 +75,3 @@ app.MapControllers();
 app.MapHealthChecks("/health");
 
 app.Run();
-

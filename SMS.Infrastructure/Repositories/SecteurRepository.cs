@@ -1,65 +1,53 @@
-﻿using SMS.Domain.Entities;
+﻿using SMS.Domain.Entities; // Include if Secteur entity is defined in SMS.Domain.Entities namespace
 using SMS.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SMS.Infrastructure.Repositories
 {
     public class SecteurRepository : ISecteurRepository
     {
-        private readonly List<Secteur> _secteurs; // Replace with actual data storage (e.g., database context)
+        private readonly FiliereDbContext _dbContext;
 
-        public SecteurRepository()
+        public SecteurRepository(FiliereDbContext dbContext)
         {
-            _secteurs = new List<Secteur>();
-            // Initialize with some sample data if needed
-            
+            _dbContext = dbContext;
         }
 
         public async Task<Secteur> AddAsync(Secteur secteur)
         {
-            
-            _secteurs.Add(secteur);
-            return await Task.FromResult(secteur);
+            secteur.Id = Guid.NewGuid(); // Generate new GUID for new entity
+            _dbContext.Secteurs.Add(secteur);
+            await _dbContext.SaveChangesAsync();
+            return secteur;
         }
 
-        //public async Task<Secteur> GetByIdAsync(int id)
-        //{
-        //    return await Task.FromResult(_secteurs.FirstOrDefault(s => s.Id =));
-        //}
+        public async Task<Secteur> GetByIdAsync(Guid id)
+        {
+            return await _dbContext.Secteurs.FindAsync(id);
+        }
 
         public async Task<IEnumerable<Secteur>> GetAllAsync()
         {
-            return await Task.FromResult(_secteurs);
+            return await _dbContext.Secteurs.ToListAsync();
         }
 
         public async Task UpdateAsync(Secteur secteur)
         {
-            var existingSecteur = _secteurs.FirstOrDefault(s => s.Id == secteur.Id);
-            if (existingSecteur != null)
+            _dbContext.Entry(secteur).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            var secteurToDelete = await _dbContext.Secteurs.FindAsync(id);
+            if (secteurToDelete != null)
             {
-                existingSecteur.Name = secteur.Name;
-                // You can add more properties to update as needed
+                _dbContext.Secteurs.Remove(secteurToDelete);
+                await _dbContext.SaveChangesAsync();
             }
-            await Task.CompletedTask; // Or you can use Task.FromResult if returning a value
         }
-
-        public async Task DeleteAsync(int id)
-        {
-            //var secteurToDelete = _secteurs.FirstOrDefault(s => s.Id == id);
-            //if (secteurToDelete != null)
-            //{
-            //    _secteurs.Remove(secteurToDelete);
-            //}
-            //await Task.CompletedTask; // Or you can use Task.FromResult if returning a value
-        }
-
-        public Task<Secteur> GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        // Implement other methods as needed (specific queries, etc.)
     }
 }

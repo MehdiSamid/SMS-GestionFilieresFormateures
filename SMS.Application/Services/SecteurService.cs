@@ -22,17 +22,17 @@ namespace SMS.Application.Services
 
         public IEnumerable<Secteur> GetAllSecteurs()
         {
-            return _context.Secteur.ToList();
+            return _context.Secteurs.ToList(); // Use correct DbSet property name
         }
 
-        //public Secteur GetSecteurById(int id)
-        //{
-        //    //return _context.Secteur.FirstOrDefault(s => s.Id == id);
-        //}
+        public Secteur GetSecteurById(Guid id)
+        {
+            return _context.Secteurs.FirstOrDefault(s => s.Id == id); // Use correct DbSet property name
+        }
 
         public void AddSecteur(Secteur secteur)
         {
-            _context.Secteur.Add(secteur);
+            _context.Secteurs.Add(secteur); // Use correct DbSet property name
             _context.SaveChanges();
         }
 
@@ -42,10 +42,10 @@ namespace SMS.Application.Services
             _context.SaveChanges();
         }
 
-        //public void DeleteSecteur(Secteur secteur)
-        //{
-        //    _context.Secteurs.Remove(secteur);
-        //    _context.SaveChanges();
-        //}
+        public void DeleteSecteur(Secteur secteur)
+        {
+            _context.Secteurs.Remove(secteur); // Use correct DbSet property name
+            _context.SaveChanges();
+        }
     }
 }
