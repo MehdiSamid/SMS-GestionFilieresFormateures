@@ -65,7 +65,6 @@ namespace SMS.Controllers
             }
         }
 
-
         // Other action methods
     }
 }
