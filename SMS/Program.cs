@@ -13,6 +13,7 @@ using SMS.Domain.Interfaces;
 using SMS.Infrastructure.Repositories;
 using SMS.Application.Mapping.SMS.Application.Mapping;
 using SMS.Infrastructure.HealthChecks;
+using SMS.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +34,9 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.G
 
 // Register Application Services
 builder.Services.AddScoped<FormateurService>();
+//builder.Services.AddScoped<UnitOfFormationService>();
 builder.Services.AddScoped<ISecteurRepository, SecteurRepository>(); // Register ISecteurRepository
+builder.Services.AddScoped<IUnitOfFormationRepository, UnitOfFormationRepository>(); // Register ISecteurRepository
 
 // Enable Swagger
 builder.Services.AddEndpointsApiExplorer();

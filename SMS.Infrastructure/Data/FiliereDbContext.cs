@@ -11,6 +11,8 @@ public class FiliereDbContext : DbContext
     public DbSet<Formateur> Formateurs { get; set; }
     public DbSet<Filiere> Filieres { get; set; }
     public DbSet<Secteur> Secteurs { get; set; }
+    public DbSet<UnitOfFormation> UnitOfFormations { get; set; }
+
 
     // Override SaveChanges to implement auditing
     public override int SaveChanges()
