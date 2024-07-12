@@ -5,6 +5,7 @@ public class FiliereDbContext : DbContext
 {
     public FiliereDbContext(DbContextOptions<FiliereDbContext> options) : base(options)
     {
+
     }
 
     // Define DbSets for each entity
@@ -45,7 +46,6 @@ public class FiliereDbContext : DbContext
                     break;
             }
         }
-
         return base.SaveChanges();
     }
 

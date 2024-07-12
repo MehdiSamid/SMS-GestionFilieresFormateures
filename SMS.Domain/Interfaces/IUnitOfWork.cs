@@ -12,5 +12,4 @@ namespace SMS.Domain.Interfaces
         IFiliereRepository FiliereRepository { get; }
         Task<int> SaveChangesAsync();
     }
-
 }
