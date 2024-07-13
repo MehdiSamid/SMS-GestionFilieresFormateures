@@ -3,6 +3,7 @@ using global::SMS.Application.DTOs.SMS.Application.DTOs;
 using global::SMS.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using SMS.Application.DTOs;
+using SMS.Application.Queries.Results;
 using SMS.Application.Services;
 namespace SMS.Controllers
 {
@@ -24,9 +25,9 @@ namespace SMS.Controllers
             [HttpGet]
             public IActionResult GetFiliere()
             {
-                var formateurs = _filiereService.GetFiliere();
-                var formateurDtos = _mapper.Map<IEnumerable<FormateurDto>>(formateurs);
-                return Ok(formateurDtos);
+                var filiers = _filiereService.GetFiliere();
+                var filieresDtos = _mapper.Map<IEnumerable<GetFilieresDto>>(filiers);
+                return Ok(filieresDtos);
             }
 
             [HttpPost]

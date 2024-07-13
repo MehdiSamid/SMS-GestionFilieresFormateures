@@ -20,10 +20,10 @@ namespace SMS.Application.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<FiliereDto> GetFiliere()
+        public IEnumerable<GetFilieresDto> GetFiliere()
         {
             var filiere = _context.Filieres.ToList();
-            return _mapper.Map<IEnumerable<FiliereDto>>(filiere);
+            return _mapper.Map<IEnumerable<GetFilieresDto>>(filiere);
         }
 
         public void AddFiliere(Filiere filiere)

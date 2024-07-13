@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SMS.Application.DTOs
 {
     
-        public class FiliereDto : BaseEntity
+        public class FiliereDto 
         {
             //public int FiliereID { get; set; }
             public string NomFiliere { get; set; }

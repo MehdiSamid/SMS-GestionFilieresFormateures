@@ -56,7 +56,7 @@ namespace SMS.Infrastructure.Repositories
 
         public Task<Filiere> Find(Guid id)
         {
-            return await _context.Filieres.(id);
+            throw new NotImplementedException();
         }
     }
 

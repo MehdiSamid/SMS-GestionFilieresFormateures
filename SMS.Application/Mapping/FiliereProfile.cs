@@ -2,6 +2,7 @@
 using SMS.Application.Commands;
 using SMS.Application.DTOs;
 using SMS.Application.DTOs.SMS.Application.DTOs;
+using SMS.Application.Queries.Results;
 using SMS.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace SMS.Application.Mapping
         {
             CreateMap<Filiere, FiliereDto>();
             CreateMap<CreateFiliereCommand, Filiere>();
+            CreateMap<Filiere, GetFilieresDto>();
         }
     }
 }
