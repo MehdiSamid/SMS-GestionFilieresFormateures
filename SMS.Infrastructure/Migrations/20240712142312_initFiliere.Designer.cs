@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SMS.Infrastructure.Migrations
 {
     [DbContext(typeof(FiliereDbContext))]
-    [Migration("20240711094416_init")]
-    partial class init
+    [Migration("20240712142312_initFiliere")]
+    partial class initFiliere
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,11 +52,23 @@ namespace SMS.Infrastructure.Migrations
                     b.Property<int>("Duree")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("FraisInscription")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("MontantAnnuel")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("MontantMensuel")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("MontantTrimestre")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Niveau")
                         .IsRequired()

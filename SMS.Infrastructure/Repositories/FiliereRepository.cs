@@ -22,7 +22,7 @@ namespace SMS.Infrastructure.Repositories
             return filiere;
         }
 
-        public async Task<Filiere> GetByIdAsync(int id)
+        public async Task<Filiere> GetByIdAsync(Guid id)
         {
             return await _context.Filieres.FindAsync(id);
         }
@@ -32,17 +32,32 @@ namespace SMS.Infrastructure.Repositories
             return await _context.Filieres.ToListAsync();
         }
 
-        public Task<Filiere> GetByIdAsync(Guid id)
+        //public Task<Filiere> GetByIdAsync(Guid id)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Task<Filiere> DeleteAsync(Guid id)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public async Task UpdateAsync(Filiere filiere)
         {
-            throw new NotImplementedException();
+            _context.Filieres.Update(filiere);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<Filiere> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Filiere filiere)
         {
-            throw new NotImplementedException();
+            _context.Filieres.Remove(filiere);
+            await _context.SaveChangesAsync();
         }
 
-        // Other CRUD methods...
+        public Task<Filiere> Find(Guid id)
+        {
+            return await _context.Filieres.(id);
+        }
     }
 
 }

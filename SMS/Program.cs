@@ -1,16 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using AutoMapper;
-using MediatR;
-using SMS.Application.Mapping;
-using SMS.Application.Services;
-using System.Reflection;
-using System;
-using System.IO;
 using SMS.Application.Mapping.SMS.Application.Mapping;
+using SMS.Application.Services;
 using SMS.Infrastructure.HealthChecks;
-using SMS.Application.Commands;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +24,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.G
 
 // Register Application Services
 builder.Services.AddScoped<FormateurService>();
+builder.Services.AddScoped<FiliereService>();
 
 // Enable Swagger
 builder.Services.AddEndpointsApiExplorer();

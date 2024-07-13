@@ -6,9 +6,12 @@ namespace SMS.Domain.Interfaces
     {
         Task<Filiere> AddAsync(Filiere filiere);
         Task<Filiere> GetByIdAsync(Guid id);
+        Task<Filiere> Find(Guid id);
         Task<IEnumerable<Filiere>> GetAllAsync();
         
-        Task<Filiere> DeleteAsync(Guid id);
+        Task DeleteAsync(Filiere filiere);
+
+        Task UpdateAsync(Filiere filiere);
     }
 
 }
