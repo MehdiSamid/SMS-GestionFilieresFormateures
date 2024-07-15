@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SMS.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class initFiliere : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,6 +62,46 @@ namespace SMS.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Formateurs", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Secteurs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Secteurs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UnitOfFormations",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdFiliere = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Duration = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UnitOfFormations", x => x.Id);
+                });
         }
 
         /// <inheritdoc />
@@ -72,6 +112,12 @@ namespace SMS.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Formateurs");
+
+            migrationBuilder.DropTable(
+                name: "Secteurs");
+
+            migrationBuilder.DropTable(
+                name: "UnitOfFormations");
         }
     }
 }
