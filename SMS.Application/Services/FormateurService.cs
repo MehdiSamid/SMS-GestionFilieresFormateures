@@ -41,7 +41,6 @@ namespace SMS.Application.Services
             _context.Formateurs.Update(formateur);
             _context.SaveChanges();
         }
-
         public void DeleteFormateur(Guid id)
         {
             var formateur = _context.Formateurs.Find(id);
@@ -50,11 +49,35 @@ namespace SMS.Application.Services
                 throw new NotFoundException($"Formateur with ID {id} not found.");
             }
 
-            _context.Entry(formateur).State = EntityState.Detached; // Détacher l'entité
+            // Update the DeletedAt property instead of removing the entity
+            formateur.DeletedAt = DateTime.UtcNow;
+            formateur.IsDeleted = true;
 
-            _context.Formateurs.Remove(formateur);
+            // Optionally set DeletedBy if applicable
+            formateur.DeletedBy = GetCurrentUserId(); // Replace with logic to get the current user ID
+
+            _context.Formateurs.Update(formateur);
             _context.SaveChanges();
         }
+
+        private string? GetCurrentUserId()
+        {
+            // Implement logic to get the current user's ID or return null if not available
+            return "system"; // Example value, replace with actual logic
+        }
+        //public void DeleteFormateur(Guid id)
+        //{
+        //    var formateur = _context.Formateurs.Find(id);
+        //    if (formateur == null)
+        //    {
+        //        throw new NotFoundException($"Formateur with ID {id} not found.");
+        //    }
+
+        //    _context.Entry(formateur).State = EntityState.Detached; // Détacher l'entité
+
+        //    _context.Formateurs.Remove(formateur);
+        //    _context.SaveChanges();
+        //}
 
 
         // Other service methods
