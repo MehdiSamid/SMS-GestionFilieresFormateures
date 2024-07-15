@@ -9,9 +9,8 @@ namespace SMS.Application.DTOs
 {
     namespace SMS.Application.DTOs
     {
-        public class FormateurDto 
+        public class FormateurDto : BaseEntity
         {
-            public Guid Id { get; set; }
             public string Nom { get; set; }
             public string Prenom { get; set; }
             public string Email { get; set; }
