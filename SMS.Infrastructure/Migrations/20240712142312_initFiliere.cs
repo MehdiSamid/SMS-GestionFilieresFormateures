@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SMS.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initFiliere : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,6 +21,10 @@ namespace SMS.Infrastructure.Migrations
                     Niveau = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Duree = table.Column<int>(type: "int", nullable: false),
                     Capacite = table.Column<int>(type: "int", nullable: false),
+                    FraisInscription = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    MontantMensuel = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    MontantAnnuel = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    MontantTrimestre = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),

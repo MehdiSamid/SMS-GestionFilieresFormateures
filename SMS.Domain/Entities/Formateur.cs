@@ -13,6 +13,7 @@ namespace SMS.Domain.Entities
         public string Type { get; set; }
         public string Specialisation { get; set; }
         public string Statut { get; set; }
+        
     }
 
 }

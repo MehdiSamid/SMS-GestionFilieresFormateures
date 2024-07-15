@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using AutoMapper;
 using MediatR;
@@ -12,8 +11,10 @@ using SMS.Application.Commands;
 using SMS.Domain.Interfaces;
 using SMS.Infrastructure.Repositories;
 using SMS.Application.Mapping.SMS.Application.Mapping;
+using SMS.Application.Services;
 using SMS.Infrastructure.HealthChecks;
 using SMS.Domain.Entities;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +38,7 @@ builder.Services.AddScoped<FormateurService>();
 //builder.Services.AddScoped<UnitOfFormationService>();
 builder.Services.AddScoped<ISecteurRepository, SecteurRepository>(); // Register ISecteurRepository
 builder.Services.AddScoped<IUnitOfFormationRepository, UnitOfFormationRepository>(); // Register ISecteurRepository
+builder.Services.AddScoped<FiliereService>();
 
 // Enable Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -46,7 +48,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Version = "v1",
         Title = "SMS API",
-        Description = "API for Gestion des Filières et des Formateurs",
+        Description = "API for Gestion des Filiï¿½res et des Formateurs",
     });
 
     // Uncomment this section if you have XML documentation file

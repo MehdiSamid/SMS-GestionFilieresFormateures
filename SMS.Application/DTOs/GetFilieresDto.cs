@@ -1,6 +1,13 @@
-﻿namespace SMS.Domain.Entities
+﻿using SMS.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SMS.Application.DTOs
 {
-    public class Filiere : BaseEntity
+    public class GetFilieresDto : BaseEntity
     {
         //public int FiliereID { get; set; }
         public string NomFiliere { get; set; }
@@ -13,5 +20,4 @@
         public decimal MontantAnnuel { get; set; }
         public decimal MontantTrimestre { get; set; }
     }
-
 }

@@ -22,25 +22,44 @@ namespace SMS.Infrastructure.Repositories
             return filiere;
         }
 
+        public async Task<Filiere> GetByIdAsync(Guid id)
+        {
+            return await _context.Filieres.FindAsync(id);
+        }
+
         public async Task<IEnumerable<Filiere>> GetAllAsync()
         {
             return await _context.Filieres.ToListAsync();
         }
 
-        public async Task<Filiere> DeleteAsync(Guid id)
+        //public Task<Filiere> GetByIdAsync(Guid id)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Task<Filiere> DeleteAsync(Guid id)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public async Task UpdateAsync(Filiere filiere)
         {
-            var filiereToDelete = await _context.Filieres.FindAsync(id);
-
-            if (filiereToDelete != null)
-            {
-                _context.Filieres.Remove(filiereToDelete);
-                await _context.SaveChangesAsync();
-            }
-
-            return filiereToDelete;
+            _context.Filieres.Update(filiere);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<Filiere> GetByIdAsync(Guid id)
+        public async Task DeleteAsync(Filiere filiere)
+        {
+            _context.Filieres.Remove(filiere);
+            await _context.SaveChangesAsync();
+        }
+
+        public Task<Filiere> Find(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Filiere> DeleteAsync(Guid id)
         {
             throw new NotImplementedException();
         }
