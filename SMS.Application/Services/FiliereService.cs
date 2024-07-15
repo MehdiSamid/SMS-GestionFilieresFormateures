@@ -7,6 +7,7 @@ using SMS.Application.DTOs;
 using SMS.Domain.Entities;
 using AutoMapper;
 using SMS.Application.DTOs.SMS.Application.DTOs;
+using SMS.Application.Exeptions;
 namespace SMS.Application.Services
 {
     public class FiliereService
@@ -62,16 +63,21 @@ namespace SMS.Application.Services
         }
         public void DeleteFiliere(Guid id)
         {
-            var filiere = _context.Filieres.Find(id);
-            if (filiere != null)
+            var Filiere = _context.Filieres.Find(id);
+            if (Filiere == null)
             {
-                _context.Filieres.Remove(filiere);
-                _context.SaveChanges();
+                throw new NotFoundException($"Formateur with ID {id} not found.");
             }
-            else
-            {
-                throw new KeyNotFoundException("Filiere not found");
-            }
+
+            // Update the DeletedAt property instead of removing the entity
+            Filiere.DeletedAt = DateTime.UtcNow;
+            Filiere.IsDeleted = true;
+
+            // Optionally set DeletedBy if applicable
+            //Filiere.DeletedBy = GetCurrentUserId(); // Replace with logic to get the current user ID
+
+            _context.Filieres.Update(Filiere);
+            _context.SaveChanges();
         }
 
     }
