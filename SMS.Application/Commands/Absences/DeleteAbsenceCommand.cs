@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using System;
+
 namespace SMS.Application.Commands.Absences
 {
     public class DeleteAbsenceCommand : IRequest<Unit>

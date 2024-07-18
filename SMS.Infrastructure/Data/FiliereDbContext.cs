@@ -14,6 +14,7 @@ public class FiliereDbContext : DbContext
     public DbSet<Secteur> Secteurs { get; set; }
     public DbSet<UnitOfFormation> UnitOfFormations { get; set; }
     public DbSet<Absence> Absences { get; set; }
+    public DbSet<Seance> Seances { get; set; }
 
 
     // Override SaveChanges to implement auditing
