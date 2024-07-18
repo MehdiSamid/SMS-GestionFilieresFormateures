@@ -5,16 +5,16 @@ using MediatR;
 using SMS.Application.Mapping;
 using SMS.Application.Services;
 using System.Reflection;
-using System;
-using System.IO;
-using SMS.Application.Commands;
+using SMS.Application.Commands.Absences;
 using SMS.Domain.Interfaces;
 using SMS.Infrastructure.Repositories;
-using SMS.Application.Mapping.SMS.Application.Mapping;
-using SMS.Application.Services;
+using SMS.Infrastructure;
+using SMS.Application.Handlers.Absences;
 using SMS.Infrastructure.HealthChecks;
-using SMS.Domain.Entities;
-using System.Reflection;
+using SMS.Application.Handlers;
+using SMS.Application.Mapping.SMS.Application.Mapping;
+using SMS.Application.Queries.Absence;
+using SMS.Application.Queries.Absences;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,14 +31,18 @@ builder.Services.AddDbContext<FiliereDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 // Register MediatR
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
+    Assembly.GetExecutingAssembly(),
+    typeof(GetAllAbsencesQuery).Assembly,
+    typeof(GetAllAbsencesHandler).Assembly
+));
+
+// Register Repositories and Unit of Work
+builder.Services.AddScoped<IAbsenceRepository, AbsenceRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Register Application Services
 builder.Services.AddScoped<FormateurService>();
-//builder.Services.AddScoped<UnitOfFormationService>();
-builder.Services.AddScoped<ISecteurRepository, SecteurRepository>(); // Register ISecteurRepository
-builder.Services.AddScoped<IUnitOfFormationRepository, UnitOfFormationRepository>(); // Register ISecteurRepository
-builder.Services.AddScoped<FiliereService>();
 
 // Enable Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -48,12 +52,8 @@ builder.Services.AddSwaggerGen(c =>
     {
         Version = "v1",
         Title = "SMS API",
-        Description = "API for Gestion des Fili�res et des Formateurs",
+        Description = "API for Gestion des Filières et des Formateurs",
     });
-
-    // Uncomment this section if you have XML documentation file
-    // var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    // c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
 // Add Health Checks
@@ -71,12 +71,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
-// Add Health Check endpoint
 app.MapHealthChecks("/health");
-
 app.Run();
