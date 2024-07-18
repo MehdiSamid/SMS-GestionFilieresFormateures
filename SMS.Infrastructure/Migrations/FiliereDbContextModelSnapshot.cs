@@ -48,9 +48,8 @@ namespace SMS.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("idFormateur")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("idFormateur")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("idSeance")
                         .IsRequired()
@@ -61,6 +60,8 @@ namespace SMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("idFormateur");
 
                     b.ToTable("Absences");
                 });
@@ -263,6 +264,17 @@ namespace SMS.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UnitOfFormations");
+                });
+
+            modelBuilder.Entity("SMS.Domain.Entities.Absence", b =>
+                {
+                    b.HasOne("SMS.Domain.Entities.Formateur", "Formateur")
+                        .WithMany()
+                        .HasForeignKey("idFormateur")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Formateur");
                 });
 #pragma warning restore 612, 618
         }

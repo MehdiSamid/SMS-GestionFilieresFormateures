@@ -7,7 +7,7 @@ namespace SMS.Application.Commands.Absences
     {
         public Guid Id { get; set; }
         public string IdSeance { get; set; }
-        public string IdFormateur { get; set; }
+        public Guid IdFormateur { get; set; }
         public string IdStagaire { get; set; }
     }
 }

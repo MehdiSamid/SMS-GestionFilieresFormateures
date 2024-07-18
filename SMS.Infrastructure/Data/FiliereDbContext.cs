@@ -53,8 +53,10 @@ public class FiliereDbContext : DbContext
     // Override OnModelCreating to configure entity behaviors
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Formateur>().HasQueryFilter(e => !e.IsDeleted);
-        modelBuilder.Entity<Filiere>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<Formateur>().HasQueryFilter(e => !e.IsDeleted && e.DeletedAt == null);
+        modelBuilder.Entity<Filiere>().HasQueryFilter(e => !e.IsDeleted && e.DeletedAt == null);
+        modelBuilder.Entity<Absence>().HasOne(a => a.Formateur).WithMany().HasForeignKey(a => a.idFormateur);
+        modelBuilder.Entity<Absence>().HasQueryFilter(e => !e.IsDeleted && e.DeletedAt == null);
         // modelBuilder.Entity<Secteur>().HasQueryFilter(e => !e.IsDeleted); // Uncomment if needed
 
         base.OnModelCreating(modelBuilder);

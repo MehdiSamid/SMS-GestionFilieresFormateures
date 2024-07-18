@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SMS.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -102,22 +102,57 @@ namespace SMS.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_UnitOfFormations", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Absences",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    idSeance = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    idFormateur = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    idStagaire = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Absences", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Absences_Formateurs_idFormateur",
+                        column: x => x.idFormateur,
+                        principalTable: "Formateurs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Absences_idFormateur",
+                table: "Absences",
+                column: "idFormateur");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Filieres");
+                name: "Absences");
 
             migrationBuilder.DropTable(
-                name: "Formateurs");
+                name: "Filieres");
 
             migrationBuilder.DropTable(
                 name: "Secteurs");
 
             migrationBuilder.DropTable(
                 name: "UnitOfFormations");
+
+            migrationBuilder.DropTable(
+                name: "Formateurs");
         }
     }
 }
