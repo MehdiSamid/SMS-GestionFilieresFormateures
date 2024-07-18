@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SMS.Infrastructure.Migrations
 {
     [DbContext(typeof(FiliereDbContext))]
-    [Migration("20240715154538_Absence")]
-    partial class Absence
+    [Migration("20240718103331_initFormateur")]
+    partial class initFormateur
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

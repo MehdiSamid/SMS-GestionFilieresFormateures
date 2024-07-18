@@ -9,7 +9,7 @@ namespace SMS.Application.DTOs
 {
     namespace SMS.Application.DTOs
     {
-        public class FormateurDto : BaseEntity
+        public class FormateurDto
         {
             public string Nom { get; set; }
             public string Prenom { get; set; }
@@ -20,5 +20,4 @@ namespace SMS.Application.DTOs
             public string Statut { get; set; } // Actif, Inactif
         }
     }
-
 }
