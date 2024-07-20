@@ -2,6 +2,7 @@
 using global::SMS.Application.DTOs.SMS.Application.DTOs;
 using global::SMS.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using SMS.Application.DTOs;
 using SMS.Application.Exceptions;
 using SMS.Application.Services;
 
@@ -26,7 +27,7 @@ namespace SMS.Controllers
         public IActionResult GetFormateurs()
         {
             var formateurs = _formateurService.GetFormateurs();
-            var formateurDtos = _mapper.Map<IEnumerable<FormateurDto>>(formateurs);
+            var formateurDtos = _mapper.Map<IEnumerable<GetFormateurDTO>>(formateurs);
             return Ok(formateurDtos);
         }
 
