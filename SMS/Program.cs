@@ -112,6 +112,7 @@ using SMS.Application.Queries.Absences;
 using SMS.Application.Queries.Seances;
 using SMS.Application.Handlers;
 using SMS.Application.Mapping.SMS.Application.Mapping;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -133,12 +134,15 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
     typeof(GetAllAbsencesQuery).Assembly,
     typeof(GetAllAbsencesHandler).Assembly,
     typeof(GetAllSeanceQuery).Assembly,
-    typeof(GetAllSeanceHandler).Assembly
+    typeof(GetAllSeanceHandler).Assembly,
+    typeof(CreateAbsenceHandler).Assembly
+
 ));
 
 // Register Repositories and Unit of Work
 builder.Services.AddScoped<IAbsenceRepository, AbsenceRepository>();
 builder.Services.AddScoped<ISeanceRepository, SeanceRepository>();
+builder.Services.AddScoped<IFormateurRepository, FormateurRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Register Application Services

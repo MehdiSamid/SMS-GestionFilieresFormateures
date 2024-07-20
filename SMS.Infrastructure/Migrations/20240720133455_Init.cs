@@ -64,6 +64,31 @@ namespace SMS.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Seances",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdFiliere = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdUniteFormation = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdGroupe = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IdSalle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdEmploi = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdFormateur = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Seances", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Secteurs",
                 columns: table => new
                 {
@@ -144,6 +169,9 @@ namespace SMS.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Filieres");
+
+            migrationBuilder.DropTable(
+                name: "Seances");
 
             migrationBuilder.DropTable(
                 name: "Secteurs");

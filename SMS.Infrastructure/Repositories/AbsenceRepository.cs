@@ -31,7 +31,7 @@ namespace SMS.Infrastructure.Repositories
 
         public async Task<IEnumerable<Absence>> GetAllAsync()
         {
-            return await _context.Absences.Include(a => a.Formateur).Where(a=> !a.IsDeleted && a.DeletedAt==null).ToListAsync();
+            return await _context.Absences.Include(a => a.Formateur).Include(e=>e.Seance).Where(a=> !a.IsDeleted && a.DeletedAt==null).ToListAsync();
         }
 
         public async Task<Absence> UpdateAsync(Absence absence)

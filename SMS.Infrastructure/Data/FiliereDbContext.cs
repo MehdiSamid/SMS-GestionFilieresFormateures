@@ -57,6 +57,7 @@ public class FiliereDbContext : DbContext
         modelBuilder.Entity<Formateur>().HasQueryFilter(e => !e.IsDeleted && e.DeletedAt == null);
         modelBuilder.Entity<Filiere>().HasQueryFilter(e => !e.IsDeleted && e.DeletedAt == null);
         modelBuilder.Entity<Absence>().HasOne(a => a.Formateur).WithMany().HasForeignKey(a => a.idFormateur);
+        modelBuilder.Entity<Absence>().HasOne(a => a.Seance).WithMany().HasForeignKey(a => a.idSeance);
         modelBuilder.Entity<Absence>().HasQueryFilter(e => !e.IsDeleted && e.DeletedAt == null);
         // modelBuilder.Entity<Secteur>().HasQueryFilter(e => !e.IsDeleted); // Uncomment if needed
 

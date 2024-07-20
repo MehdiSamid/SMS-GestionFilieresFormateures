@@ -9,11 +9,14 @@ namespace SMS.Domain.Entities
 {
     public class Absence : BaseEntity
     {
-        public string idSeance { get; set; }
+        public Guid idSeance { get; set; }
         public Guid idFormateur { get; set; }
         public string idStagaire { get; set; }
 
         [ForeignKey (nameof(idFormateur))]
-        public Formateur Formateur { get; set; }    
+        public Formateur Formateur { get; set; } 
+
+        [ForeignKey (nameof(idSeance))]
+        public Seance Seance { get; set; }
     }
 }
