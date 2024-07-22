@@ -1,13 +1,14 @@
-﻿
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SMS.Domain.Entities;
 using SMS.Domain.Interfaces;
-using System.Collections.Immutable;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SMS.Infrastructure.Repositories
 {
-    public class FiliereRepository : FiliereRepositoryBase, IFiliereRepository
+    public class FiliereRepository : IFiliereRepository
     {
         private readonly FiliereDbContext _context;
 
@@ -18,11 +19,17 @@ namespace SMS.Infrastructure.Repositories
 
         public async Task<Filiere> AddAsync(Filiere filiere)
         {
-            await _context.Filieres.AddAsync(filiere);
+            _context.Filieres.Add(filiere);
+            await _context.SaveChangesAsync();
             return filiere;
         }
 
         public async Task<Filiere> GetByIdAsync(Guid id)
+        {
+            return await _context.Filieres.FindAsync(id);
+        }
+
+        public async Task<Filiere> Find(Guid id)
         {
             return await _context.Filieres.FindAsync(id);
         }
@@ -32,20 +39,16 @@ namespace SMS.Infrastructure.Repositories
             return await _context.Filieres.ToListAsync();
         }
 
-        //public Task<Filiere> GetByIdAsync(Guid id)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public Task<Filiere> DeleteAsync(Guid id)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public async Task UpdateAsync(Filiere filiere)
+        public async Task<Filiere> DeleteAsync(Guid id)
         {
-            _context.Filieres.Update(filiere);
-            await _context.SaveChangesAsync();
+            var entity = await _context.Filieres.FindAsync(id);
+            if (entity != null)
+            {
+                _context.Filieres.Remove(entity);
+                await _context.SaveChangesAsync();
+                return entity;
+            }
+            return null;
         }
 
         public async Task DeleteAsync(Filiere filiere)
@@ -54,18 +57,15 @@ namespace SMS.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public Task<Filiere> Find(Guid id)
+        public async Task UpdateAsync(Filiere filiere)
         {
-            throw new NotImplementedException();
+            _context.Filieres.Update(filiere);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<Filiere> DeleteAsync(Guid id)
+        public async Task<IEnumerable<Filiere>> GetFilieresByUnitOfFormationIdAsync(Guid unitId)
         {
-            throw new NotImplementedException();
+            return await _context.Filieres.Where(f => f.UnitOfFormationId == unitId).ToListAsync();
         }
-    }
-
-    public class FiliereRepositoryBase
-    {
     }
 }

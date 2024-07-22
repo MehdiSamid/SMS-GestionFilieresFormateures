@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-using SMS.Application.Commands;
+﻿using SMS.Application.Commands;
 using SMS.Domain.Entities;
 using SMS.Domain.Interfaces;
+using System.Threading.Tasks;
 
 namespace SMS.Application.Handlers
 {

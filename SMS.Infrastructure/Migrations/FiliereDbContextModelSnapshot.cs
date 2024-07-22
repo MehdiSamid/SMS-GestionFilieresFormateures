@@ -75,10 +75,15 @@ namespace SMS.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("UnitOfFormationId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UnitOfFormationId");
 
                     b.ToTable("Filieres");
                 });
@@ -185,6 +190,9 @@ namespace SMS.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("Coefficient")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -213,12 +221,27 @@ namespace SMS.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Semestre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.ToTable("UnitOfFormations");
+                });
+
+            modelBuilder.Entity("SMS.Domain.Entities.Filiere", b =>
+                {
+                    b.HasOne("SMS.Domain.Entities.UnitOfFormation", "UnitOfFormation")
+                        .WithMany()
+                        .HasForeignKey("UnitOfFormationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UnitOfFormation");
                 });
 #pragma warning restore 612, 618
         }

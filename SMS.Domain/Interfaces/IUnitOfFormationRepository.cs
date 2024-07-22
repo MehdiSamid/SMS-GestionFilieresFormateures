@@ -1,7 +1,7 @@
-﻿using System;
+﻿using SMS.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SMS.Domain.Entities;
 
 namespace SMS.Domain.Interfaces
 {
@@ -13,5 +13,6 @@ namespace SMS.Domain.Interfaces
         Task<IEnumerable<UnitOfFormation>> GetByIdFiliereAsync(Guid idFiliere);
         Task<UnitOfFormation> UpdateAsync(UnitOfFormation unitOfFormation);
         Task DeleteAsync(Guid id);
+        Task<UnitOfFormation> GetUnitOfFormationByNameAsync(string name); // Add this method
     }
 }

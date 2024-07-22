@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SMS.Application.Queries
+﻿namespace SMS.Application.Queries
 {
     public class GetUnitOfFormationQuery
     {

@@ -1,59 +1,64 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using SMS.Domain.Entities;
+using SMS.Domain.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SMS.Domain.Entities;
-using SMS.Domain.Interfaces;
 
 namespace SMS.Infrastructure.Repositories
 {
     public class UnitOfFormationRepository : IUnitOfFormationRepository
     {
-        private readonly List<UnitOfFormation> _unitsOfFormation = new();
+        private readonly FiliereDbContext _context;
+
+        public UnitOfFormationRepository(FiliereDbContext context)
+        {
+            _context = context;
+        }
 
         public async Task<UnitOfFormation> AddAsync(UnitOfFormation unitOfFormation)
         {
-            unitOfFormation.Id = Guid.NewGuid();  // Ensure a new ID is assigned
-            _unitsOfFormation.Add(unitOfFormation);
-            return await Task.FromResult(unitOfFormation);
+            _context.UnitOfFormations.Add(unitOfFormation);
+            await _context.SaveChangesAsync();
+            return unitOfFormation;
         }
 
         public async Task<UnitOfFormation> GetByIdAsync(Guid id)
         {
-            var unitOfFormation = _unitsOfFormation.FirstOrDefault(u => u.Id == id);
-            return await Task.FromResult(unitOfFormation);
+            return await _context.UnitOfFormations.FindAsync(id);
         }
 
         public async Task<IEnumerable<UnitOfFormation>> GetAllAsync()
         {
-            return await Task.FromResult(_unitsOfFormation);
+            return await _context.UnitOfFormations.ToListAsync();
         }
 
         public async Task<IEnumerable<UnitOfFormation>> GetByIdFiliereAsync(Guid idFiliere)
         {
-            var units = _unitsOfFormation.Where(u => u.IdFiliere == idFiliere).ToList();
-            return await Task.FromResult(units);
+            return await _context.UnitOfFormations.Where(u => u.IdFiliere == idFiliere).ToListAsync();
         }
 
         public async Task<UnitOfFormation> UpdateAsync(UnitOfFormation unitOfFormation)
         {
-            var existingUnit = _unitsOfFormation.FirstOrDefault(u => u.Id == unitOfFormation.Id);
-            if (existingUnit == null) throw new Exception("UnitOfFormation not found");
-
-            existingUnit.Name = unitOfFormation.Name;
-            existingUnit.IdFiliere = unitOfFormation.IdFiliere;
-            existingUnit.Duration = unitOfFormation.Duration;
-
-            return await Task.FromResult(existingUnit);
+            _context.UnitOfFormations.Update(unitOfFormation);
+            await _context.SaveChangesAsync();
+            return unitOfFormation;
         }
 
         public async Task DeleteAsync(Guid id)
         {
-            var unitOfFormation = _unitsOfFormation.FirstOrDefault(u => u.Id == id);
-            if (unitOfFormation == null) throw new Exception("UnitOfFormation not found");
+            var entity = await _context.UnitOfFormations.FindAsync(id);
+            if (entity != null)
+            {
+                _context.UnitOfFormations.Remove(entity);
+                await _context.SaveChangesAsync();
+            }
+        }
 
-            _unitsOfFormation.Remove(unitOfFormation);
-            await Task.CompletedTask;
+        public async Task<UnitOfFormation> GetUnitOfFormationByNameAsync(string name)
+        {
+            return await _context.UnitOfFormations.FirstOrDefaultAsync(u => u.Name == name);
         }
     }
 }

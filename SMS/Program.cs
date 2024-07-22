@@ -15,6 +15,7 @@ using SMS.Application.Services;
 using SMS.Infrastructure.HealthChecks;
 using SMS.Domain.Entities;
 using System.Reflection;
+using Microsoft.AspNetCore.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,12 +34,18 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
-// Register Application Services
+// Register services
 builder.Services.AddScoped<FormateurService>();
-//builder.Services.AddScoped<UnitOfFormationService>();
-builder.Services.AddScoped<ISecteurRepository, SecteurRepository>(); // Register ISecteurRepository
-builder.Services.AddScoped<IUnitOfFormationRepository, UnitOfFormationRepository>(); // Register ISecteurRepository
-builder.Services.AddScoped<FiliereService>();
+builder.Services.AddScoped<ISecteurRepository, SecteurRepository>();
+builder.Services.AddScoped<IUnitOfFormationRepository, UnitOfFormationRepository>();
+builder.Services.AddScoped<IFiliereService, FiliereService>();
+builder.Services.AddScoped<IUnitOfFormationService, UnitOfFormationService>();
+builder.Services.AddScoped<IFiliereRepository, FiliereRepository>();
+builder.Services.AddScoped<FiliereService>(); // Ensure FiliereService is registered
+
+// Register AutoMapper
+builder.Services.AddAutoMapper(typeof(Program)); 
+
 
 // Enable Swagger
 builder.Services.AddEndpointsApiExplorer();

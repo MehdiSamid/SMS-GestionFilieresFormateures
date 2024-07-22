@@ -2,7 +2,6 @@
 {
     public class Filiere : BaseEntity
     {
-        //public int FiliereID { get; set; }
         public string NomFiliere { get; set; }
         public string Description { get; set; }
         public string Niveau { get; set; }
@@ -12,6 +11,9 @@
         public decimal MontantMensuel { get; set; }
         public decimal MontantAnnuel { get; set; }
         public decimal MontantTrimestre { get; set; }
-    }
 
+        // New properties to link Filiere with UnitOfFormation
+        public Guid UnitOfFormationId { get; set; }
+        public UnitOfFormation UnitOfFormation { get; set; }
+    }
 }

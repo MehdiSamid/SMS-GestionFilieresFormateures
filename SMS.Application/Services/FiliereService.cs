@@ -1,24 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using SMS.Application.DTOs;
 using SMS.Domain.Entities;
-using AutoMapper;
-using SMS.Application.DTOs.SMS.Application.DTOs;
-using SMS.Application.Exeptions;
+using SMS.Application.Exceptions;
+using SMS.Domain.Interfaces;
+
 namespace SMS.Application.Services
 {
-    public class FiliereService
+    public class FiliereService : IFiliereService
     {
         private readonly FiliereDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IUnitOfFormationRepository _unitOfFormationRepository;
+        private readonly IFiliereRepository _filiereRepository;
 
-        public FiliereService(FiliereDbContext context, IMapper mapper)
+        public FiliereService(FiliereDbContext context, IMapper mapper, IUnitOfFormationRepository unitOfFormationRepository, IFiliereRepository filiereRepository)
         {
             _context = context;
             _mapper = mapper;
+            _unitOfFormationRepository = unitOfFormationRepository;
+            _filiereRepository = filiereRepository;
         }
 
         public IEnumerable<GetFilieresDto> GetFiliere()
@@ -32,55 +36,53 @@ namespace SMS.Application.Services
             _context.Filieres.Add(filiere);
             _context.SaveChanges();
         }
-        //public void UpdateFiliere( Filiere updatedFiliere)
-        //{
-        //    //var existingFiliere = _context.Filieres.Find(id);
-        //if (existingFiliere != null)
-        //{
-        //    existingFiliere.NomFiliere = updatedFiliere.NomFiliere;
-        //    existingFiliere.Description = updatedFiliere.Description;
-        //    existingFiliere.Niveau = updatedFiliere.Niveau;
-        //    existingFiliere.Duree = updatedFiliere.Duree;
-        //    existingFiliere.Capacite = updatedFiliere.Capacite;
-        //    existingFiliere.FraisInscription = updatedFiliere.FraisInscription;
-        //    existingFiliere.MontantMensuel = updatedFiliere.MontantMensuel;
-        //    existingFiliere.MontantAnnuel = updatedFiliere.MontantAnnuel;
-        //    existingFiliere.MontantTrimestre = updatedFiliere.MontantTrimestre;
-
-        //_context.Filieres.Update(updatedFiliere);
-        //_context.SaveChanges();
-        //}
-        //else
-        //{
-        //    throw new KeyNotFoundException("Filiere not found");
-        //}
-        ////}
 
         public void UpdateFiliere(Filiere filiere)
         {
             _context.Filieres.Update(filiere);
             _context.SaveChanges();
         }
+
         public void DeleteFiliere(Guid id)
         {
-            var Filiere = _context.Filieres.Find(id);
-            if (Filiere == null)
+            var filiere = _context.Filieres.Find(id);
+            if (filiere == null)
             {
-                throw new NotFoundException($"Formateur with ID {id} not found.");
+                throw new NotFoundException($"Filiere with ID {id} not found.");
             }
 
             // Update the DeletedAt property instead of removing the entity
-            Filiere.DeletedAt = DateTime.UtcNow;
-            Filiere.IsDeleted = true;
+            filiere.DeletedAt = DateTime.UtcNow;
+            filiere.IsDeleted = true;
 
             // Optionally set DeletedBy if applicable
-            //Filiere.DeletedBy = GetCurrentUserId(); // Replace with logic to get the current user ID
+            //filiere.DeletedBy = GetCurrentUserId(); // Replace with logic to get the current user ID
 
-            _context.Filieres.Update(Filiere);
+            _context.Filieres.Update(filiere);
             _context.SaveChanges();
         }
 
+        public async Task<IEnumerable<FiliereDto>> GetFilieresByUnitOfFormationNameAsync(string unitName)
+        {
+            var unit = await _unitOfFormationRepository.GetUnitOfFormationByNameAsync(unitName);
+            if (unit == null)
+            {
+                return Enumerable.Empty<FiliereDto>();
+            }
+
+            var filieres = await _filiereRepository.GetFilieresByUnitOfFormationIdAsync(unit.Id);
+            return filieres.Select(f => new FiliereDto
+            {
+                NomFiliere = f.NomFiliere, // Assuming the entity's property is named `Name`
+                Description = f.Description,
+                Niveau = f.Niveau, // Assuming the entity's property is named `Level`
+                Duree = f.Duree, // Assuming the entity's property is named `Duration`
+                Capacite = f.Capacite, // Assuming the entity's property is named `Capacity`
+                FraisInscription = f.FraisInscription, // Assuming the entity's property is named `RegistrationFee`
+                MontantMensuel = f.MontantMensuel, // Assuming the entity's property is named `MonthlyAmount`
+                MontantAnnuel = f.MontantAnnuel, // Assuming the entity's property is named `AnnualAmount`
+                MontantTrimestre = f.MontantTrimestre // Assuming the entity's property is named `QuarterlyAmount`
+            });
+        }
     }
 }
-
-

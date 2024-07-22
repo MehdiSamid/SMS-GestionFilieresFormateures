@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SMS.Domain.Entities;
+using System;
+using System.Linq;
 
 public class FiliereDbContext : DbContext
 {
     public FiliereDbContext(DbContextOptions<FiliereDbContext> options) : base(options)
     {
-
     }
 
     // Define DbSets for each entity
@@ -13,7 +14,6 @@ public class FiliereDbContext : DbContext
     public DbSet<Filiere> Filieres { get; set; }
     public DbSet<Secteur> Secteurs { get; set; }
     public DbSet<UnitOfFormation> UnitOfFormations { get; set; }
-
 
     // Override SaveChanges to implement auditing
     public override int SaveChanges()
@@ -54,7 +54,14 @@ public class FiliereDbContext : DbContext
     {
         modelBuilder.Entity<Formateur>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Filiere>().HasQueryFilter(e => !e.IsDeleted);
-        // modelBuilder.Entity<Secteur>().HasQueryFilter(e => !e.IsDeleted); // Uncomment if needed
+        modelBuilder.Entity<UnitOfFormation>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<Secteur>().HasQueryFilter(e => !e.IsDeleted);
+
+        // If there are any relationships to configure, do it here
+        // e.g. modelBuilder.Entity<Filiere>()
+        //         .HasOne(f => f.UnitOfFormation)
+        //         .WithMany(u => u.Filieres)
+        //         .HasForeignKey(f => f.UnitOfFormationId);
 
         base.OnModelCreating(modelBuilder);
     }

@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SMS.Application.DTOs;
+using SMS.Application.DTOs.UnitOfFormations;
 using SMS.Application.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SMS.Controllers
@@ -12,10 +13,12 @@ namespace SMS.Controllers
     public class UnitOfFormationController : ControllerBase
     {
         private readonly IUnitOfFormationService _service;
+        private readonly IFiliereService _filiereService;
 
-        public UnitOfFormationController(IUnitOfFormationService service)
+        public UnitOfFormationController(IUnitOfFormationService service, IFiliereService filiereService)
         {
             _service = service;
+            _filiereService = filiereService;
         }
 
         [HttpGet]
@@ -31,7 +34,7 @@ namespace SMS.Controllers
             var unit = await _service.GetByIdAsync(id);
             if (unit == null)
             {
-                return NotFound();
+                return NotFound($"UnitOfFormation with ID {id} not found");
             }
             return Ok(unit);
         }
@@ -44,7 +47,7 @@ namespace SMS.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<UnitOfFormationDto>> CreateUnitOfFormation(UnitOfFormationDto unitDto)
+        public async Task<IActionResult> Create(AddUnitofFormationDto unitDto)
         {
             var createdUnit = await _service.AddAsync(unitDto);
             return CreatedAtAction(nameof(GetUnitOfFormationById), new { id = createdUnit.Id }, createdUnit);
@@ -61,13 +64,18 @@ namespace SMS.Controllers
             try
             {
                 await _service.UpdateAsync(unitDto);
+                return Ok("UnitOfFormation updated successfully");
             }
-            catch (Exception)
+            catch (KeyNotFoundException)
             {
                 return NotFound($"UnitOfFormation with ID {id} not found");
             }
-
-            return Ok("UnitOfFormation updated successfully");
+            catch (Exception ex)
+            {
+                // Log the exception
+                Console.WriteLine(ex.Message);
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpDelete("{id}")]
@@ -82,13 +90,34 @@ namespace SMS.Controllers
             try
             {
                 await _service.DeleteAsync(id);
+                return Ok("UnitOfFormation deleted successfully");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest($"Failed to delete UnitOfFormation with ID {id}");
+                // Log the exception
+                Console.WriteLine(ex.Message);
+                return StatusCode(500, $"Failed to delete UnitOfFormation with ID {id}");
             }
+        }
 
-            return Ok("UnitOfFormation deleted successfully");
+        [HttpGet("filieresByUnitOfFormation/{unitName}")]
+        public async Task<IActionResult> GetFilieresByUnitOfFormationName(string unitName)
+        {
+            try
+            {
+                var filieres = await _filiereService.GetFilieresByUnitOfFormationNameAsync(unitName);
+                if (filieres == null || !filieres.Any())
+                {
+                    return NotFound($"No Filieres found with UnitOfFormation name {unitName}");
+                }
+                return Ok(filieres);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                Console.WriteLine(ex.Message);
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }
