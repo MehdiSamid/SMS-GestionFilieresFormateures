@@ -14,6 +14,8 @@ public class FiliereDbContext : DbContext
     public DbSet<Filiere> Filieres { get; set; }
     public DbSet<Secteur> Secteurs { get; set; }
     public DbSet<UnitOfFormation> UnitOfFormations { get; set; }
+    public DbSet<Absence> Absences { get; set; }
+    public DbSet<Seance> Seances { get; set; }
 
     // Override SaveChanges to implement auditing
     public override int SaveChanges()
@@ -52,8 +54,7 @@ public class FiliereDbContext : DbContext
     // Override OnModelCreating to configure entity behaviors
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Formateur>().HasQueryFilter(e => !e.IsDeleted);
-        modelBuilder.Entity<Filiere>().HasQueryFilter(e => !e.IsDeleted);
+      
         modelBuilder.Entity<UnitOfFormation>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Secteur>().HasQueryFilter(e => !e.IsDeleted);
 
@@ -62,6 +63,12 @@ public class FiliereDbContext : DbContext
         //         .HasOne(f => f.UnitOfFormation)
         //         .WithMany(u => u.Filieres)
         //         .HasForeignKey(f => f.UnitOfFormationId);
+        modelBuilder.Entity<Formateur>().HasQueryFilter(e => !e.IsDeleted && e.DeletedAt == null);
+        modelBuilder.Entity<Filiere>().HasQueryFilter(e => !e.IsDeleted && e.DeletedAt == null);
+        modelBuilder.Entity<Absence>().HasOne(a => a.Formateur).WithMany().HasForeignKey(a => a.idFormateur);
+        modelBuilder.Entity<Absence>().HasOne(a => a.Seance).WithMany().HasForeignKey(a => a.idSeance);
+        modelBuilder.Entity<Absence>().HasQueryFilter(e => !e.IsDeleted && e.DeletedAt == null);
+        // modelBuilder.Entity<Secteur>().HasQueryFilter(e => !e.IsDeleted); // Uncomment if needed
 
         base.OnModelCreating(modelBuilder);
     }

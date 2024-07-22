@@ -15,9 +15,10 @@ namespace SMS.Application.Mapping
             public AutoMapperProfile()
             {
                 CreateMap<Formateur, FormateurDto>().ReverseMap();
+                CreateMap<Formateur, GetFormateurDTO>().ReverseMap();
+
                 CreateMap<Filiere, FiliereDto>().ReverseMap();
                 CreateMap<Filiere, GetFilieresDto> ().ReverseMap();
-
             }
         }
     }

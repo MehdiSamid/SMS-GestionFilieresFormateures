@@ -24,10 +24,10 @@ namespace SMS.Application.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<FormateurDto> GetFormateurs()
+        public IEnumerable<GetFormateurDTO> GetFormateurs()
         {
             var formateurs = _context.Formateurs.ToList();
-            return _mapper.Map<IEnumerable<FormateurDto>>(formateurs);
+            return _mapper.Map<IEnumerable<GetFormateurDTO>>(formateurs);
         }
 
         public void AddFormateur(Formateur formateur)
