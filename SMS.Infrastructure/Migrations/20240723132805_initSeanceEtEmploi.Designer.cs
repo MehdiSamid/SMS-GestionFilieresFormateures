@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SMS.Infrastructure.Migrations
 {
     [DbContext(typeof(FiliereDbContext))]
-    [Migration("20240723105225_initSeance")]
-    partial class initSeance
+    [Migration("20240723132805_initSeanceEtEmploi")]
+    partial class initSeanceEtEmploi
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,6 +66,49 @@ namespace SMS.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Absences");
+                });
+
+            modelBuilder.Entity("SMS.Domain.Entities.Emploi", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("dateEmploi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("groupe")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("semestre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Emplois");
                 });
 
             modelBuilder.Entity("SMS.Domain.Entities.Filiere", b =>
