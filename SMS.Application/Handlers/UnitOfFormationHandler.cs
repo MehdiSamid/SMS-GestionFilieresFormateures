@@ -19,7 +19,7 @@ namespace SMS.Application.Handlers
             var unitOfFormation = new UnitOfFormation
             {
                 Name = command.Name,
-                IdFiliere = command.IdFiliere,
+                //IdFiliere = command.IdFiliere,
                 Duration = command.Duration
             };
 

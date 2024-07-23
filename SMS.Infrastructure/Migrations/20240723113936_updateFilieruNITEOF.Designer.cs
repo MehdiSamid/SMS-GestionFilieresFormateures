@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SMS.Infrastructure.Migrations
 {
     [DbContext(typeof(FiliereDbContext))]
-    [Migration("20240719122912_initial")]
-    partial class initial
+    [Migration("20240723113936_updateFilieruNITEOF")]
+    partial class updateFilieruNITEOF
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,52 @@ namespace SMS.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("SMS.Domain.Entities.Absence", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("idFormateur")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("idSeance")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("idStagaire")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("idFormateur");
+
+                    b.HasIndex("idSeance");
+
+                    b.ToTable("Absences");
+                });
 
             modelBuilder.Entity("SMS.Domain.Entities.Filiere", b =>
                 {
@@ -78,17 +124,27 @@ namespace SMS.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UnitOfFormationId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
+                    b.ToTable("Filieres");
+                });
+
+            modelBuilder.Entity("SMS.Domain.Entities.FiliereUnitOfFormation", b =>
+                {
+                    b.Property<Guid>("FiliereId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UnitOfFormationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("FiliereId", "UnitOfFormationId");
+
                     b.HasIndex("UnitOfFormationId");
 
-                    b.ToTable("Filieres");
+                    b.ToTable("FiliereUnitOfFormations");
                 });
 
             modelBuilder.Entity("SMS.Domain.Entities.Formateur", b =>
@@ -151,6 +207,65 @@ namespace SMS.Infrastructure.Migrations
                     b.ToTable("Formateurs");
                 });
 
+            modelBuilder.Entity("SMS.Domain.Entities.Seance", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdEmploi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdFiliere")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdFormateur")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdGroupe")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdSalle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdUniteFormation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Seances");
+                });
+
             modelBuilder.Entity("SMS.Domain.Entities.Secteur", b =>
                 {
                     b.Property<Guid>("Id")
@@ -211,9 +326,6 @@ namespace SMS.Infrastructure.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("IdFiliere")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -236,15 +348,52 @@ namespace SMS.Infrastructure.Migrations
                     b.ToTable("UnitOfFormations");
                 });
 
-            modelBuilder.Entity("SMS.Domain.Entities.Filiere", b =>
+            modelBuilder.Entity("SMS.Domain.Entities.Absence", b =>
                 {
-                    b.HasOne("SMS.Domain.Entities.UnitOfFormation", "UnitOfFormation")
+                    b.HasOne("SMS.Domain.Entities.Formateur", "Formateur")
                         .WithMany()
+                        .HasForeignKey("idFormateur")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SMS.Domain.Entities.Seance", "Seance")
+                        .WithMany()
+                        .HasForeignKey("idSeance")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Formateur");
+
+                    b.Navigation("Seance");
+                });
+
+            modelBuilder.Entity("SMS.Domain.Entities.FiliereUnitOfFormation", b =>
+                {
+                    b.HasOne("SMS.Domain.Entities.Filiere", "Filiere")
+                        .WithMany("FiliereUnitOfFormations")
+                        .HasForeignKey("FiliereId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SMS.Domain.Entities.UnitOfFormation", "UnitOfFormation")
+                        .WithMany("FiliereUnitOfFormations")
                         .HasForeignKey("UnitOfFormationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Filiere");
+
                     b.Navigation("UnitOfFormation");
+                });
+
+            modelBuilder.Entity("SMS.Domain.Entities.Filiere", b =>
+                {
+                    b.Navigation("FiliereUnitOfFormations");
+                });
+
+            modelBuilder.Entity("SMS.Domain.Entities.UnitOfFormation", b =>
+                {
+                    b.Navigation("FiliereUnitOfFormations");
                 });
 #pragma warning restore 612, 618
         }

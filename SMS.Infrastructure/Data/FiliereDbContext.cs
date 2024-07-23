@@ -16,6 +16,8 @@ public class FiliereDbContext : DbContext
     public DbSet<UnitOfFormation> UnitOfFormations { get; set; }
     public DbSet<Absence> Absences { get; set; }
     public DbSet<Seance> Seances { get; set; }
+    public DbSet<FiliereUnitOfFormation> FiliereUnitOfFormations { get; set; }
+
 
     // Override SaveChanges to implement auditing
     public override int SaveChanges()
@@ -69,6 +71,18 @@ public class FiliereDbContext : DbContext
         modelBuilder.Entity<Absence>().HasOne(a => a.Seance).WithMany().HasForeignKey(a => a.idSeance);
         modelBuilder.Entity<Absence>().HasQueryFilter(e => !e.IsDeleted && e.DeletedAt == null);
         // modelBuilder.Entity<Secteur>().HasQueryFilter(e => !e.IsDeleted); // Uncomment if needed
+        modelBuilder.Entity<FiliereUnitOfFormation>()
+            .HasKey(fu => new { fu.FiliereId, fu.UnitOfFormationId });
+
+        modelBuilder.Entity<FiliereUnitOfFormation>()
+            .HasOne(fu => fu.Filiere)
+            .WithMany(f => f.FiliereUnitOfFormations)
+            .HasForeignKey(fu => fu.FiliereId);
+
+        modelBuilder.Entity<FiliereUnitOfFormation>()
+            .HasOne(fu => fu.UnitOfFormation)
+            .WithMany(u => u.FiliereUnitOfFormations)
+            .HasForeignKey(fu => fu.UnitOfFormationId);
 
         base.OnModelCreating(modelBuilder);
     }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SMS.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class updateFilieruNITEOF : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -113,8 +113,9 @@ namespace SMS.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IdFiliere = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Semestre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: false),
+                    Coefficient = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -133,7 +134,7 @@ namespace SMS.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    idSeance = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    idSeance = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     idFormateur = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     idStagaire = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -153,12 +154,52 @@ namespace SMS.Infrastructure.Migrations
                         principalTable: "Formateurs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Absences_Seances_idSeance",
+                        column: x => x.idSeance,
+                        principalTable: "Seances",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FiliereUnitOfFormations",
+                columns: table => new
+                {
+                    FiliereId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UnitOfFormationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FiliereUnitOfFormations", x => new { x.FiliereId, x.UnitOfFormationId });
+                    table.ForeignKey(
+                        name: "FK_FiliereUnitOfFormations_Filieres_FiliereId",
+                        column: x => x.FiliereId,
+                        principalTable: "Filieres",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FiliereUnitOfFormations_UnitOfFormations_UnitOfFormationId",
+                        column: x => x.UnitOfFormationId,
+                        principalTable: "UnitOfFormations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Absences_idFormateur",
                 table: "Absences",
                 column: "idFormateur");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Absences_idSeance",
+                table: "Absences",
+                column: "idSeance");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FiliereUnitOfFormations_UnitOfFormationId",
+                table: "FiliereUnitOfFormations",
+                column: "UnitOfFormationId");
         }
 
         /// <inheritdoc />
@@ -168,19 +209,22 @@ namespace SMS.Infrastructure.Migrations
                 name: "Absences");
 
             migrationBuilder.DropTable(
-                name: "Filieres");
-
-            migrationBuilder.DropTable(
-                name: "Seances");
+                name: "FiliereUnitOfFormations");
 
             migrationBuilder.DropTable(
                 name: "Secteurs");
 
             migrationBuilder.DropTable(
-                name: "UnitOfFormations");
+                name: "Formateurs");
 
             migrationBuilder.DropTable(
-                name: "Formateurs");
+                name: "Seances");
+
+            migrationBuilder.DropTable(
+                name: "Filieres");
+
+            migrationBuilder.DropTable(
+                name: "UnitOfFormations");
         }
     }
 }

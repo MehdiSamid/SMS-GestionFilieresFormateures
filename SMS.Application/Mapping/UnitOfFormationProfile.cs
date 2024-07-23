@@ -10,7 +10,7 @@ namespace SMS.Application.Mapping
             Id = unit.Id,
             Name = unit.Name,
             Semestre = unit.Semestre,
-            IdFiliere = unit.IdFiliere,
+            //IdFiliere = unit.IdFiliere,
             Duration = unit.Duration
         };
 
@@ -19,7 +19,7 @@ namespace SMS.Application.Mapping
             Id = unitDto.Id,
             Name = unitDto.Name,
             Semestre = unitDto.Semestre,
-            IdFiliere = unitDto.IdFiliere,
+            //IdFiliere = unitDto.IdFiliere,
             Duration = unitDto.Duration
         };
 
@@ -27,7 +27,7 @@ namespace SMS.Application.Mapping
         {
             Name = addUnitDto.Name,
             Semestre = addUnitDto.Semestre,
-            IdFiliere = addUnitDto.IdFiliere,
+            //IdFiliere = addUnitDto.IdFiliere,
             Duration = addUnitDto.Duration
         };
     }

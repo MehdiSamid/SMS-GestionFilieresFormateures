@@ -36,7 +36,7 @@ namespace SMS.Infrastructure.Repositories
 
         public async Task<IEnumerable<UnitOfFormation>> GetByIdFiliereAsync(Guid idFiliere)
         {
-            return await _context.UnitOfFormations.Where(u => u.IdFiliere == idFiliere).ToListAsync();
+            return await _context.UnitOfFormations.Where(u => u.Id == idFiliere).ToListAsync();
         }
 
         public async Task<UnitOfFormation> UpdateAsync(UnitOfFormation unitOfFormation)

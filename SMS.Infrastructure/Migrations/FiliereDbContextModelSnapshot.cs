@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,11 +10,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SMS.Infrastructure.Migrations
 {
     [DbContext(typeof(FiliereDbContext))]
-    [Migration("20240720140638_seancewithabsence")]
-    partial class seancewithabsence
+    partial class FiliereDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,6 +127,21 @@ namespace SMS.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Filieres");
+                });
+
+            modelBuilder.Entity("SMS.Domain.Entities.FiliereUnitOfFormation", b =>
+                {
+                    b.Property<Guid>("FiliereId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UnitOfFormationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("FiliereId", "UnitOfFormationId");
+
+                    b.HasIndex("UnitOfFormationId");
+
+                    b.ToTable("FiliereUnitOfFormations");
                 });
 
             modelBuilder.Entity("SMS.Domain.Entities.Formateur", b =>
@@ -293,6 +305,9 @@ namespace SMS.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("Coefficient")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -308,9 +323,6 @@ namespace SMS.Infrastructure.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("IdFiliere")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -318,6 +330,10 @@ namespace SMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Semestre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -346,6 +362,35 @@ namespace SMS.Infrastructure.Migrations
                     b.Navigation("Formateur");
 
                     b.Navigation("Seance");
+                });
+
+            modelBuilder.Entity("SMS.Domain.Entities.FiliereUnitOfFormation", b =>
+                {
+                    b.HasOne("SMS.Domain.Entities.Filiere", "Filiere")
+                        .WithMany("FiliereUnitOfFormations")
+                        .HasForeignKey("FiliereId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SMS.Domain.Entities.UnitOfFormation", "UnitOfFormation")
+                        .WithMany("FiliereUnitOfFormations")
+                        .HasForeignKey("UnitOfFormationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Filiere");
+
+                    b.Navigation("UnitOfFormation");
+                });
+
+            modelBuilder.Entity("SMS.Domain.Entities.Filiere", b =>
+                {
+                    b.Navigation("FiliereUnitOfFormations");
+                });
+
+            modelBuilder.Entity("SMS.Domain.Entities.UnitOfFormation", b =>
+                {
+                    b.Navigation("FiliereUnitOfFormations");
                 });
 #pragma warning restore 612, 618
         }

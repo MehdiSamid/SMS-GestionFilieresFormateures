@@ -12,8 +12,6 @@
         public decimal MontantAnnuel { get; set; }
         public decimal MontantTrimestre { get; set; }
 
-        // New properties to link Filiere with UnitOfFormation
-        public Guid UnitOfFormationId { get; set; }
-        public UnitOfFormation UnitOfFormation { get; set; }
+        public ICollection<FiliereUnitOfFormation> FiliereUnitOfFormations { get; set; }
     }
 }

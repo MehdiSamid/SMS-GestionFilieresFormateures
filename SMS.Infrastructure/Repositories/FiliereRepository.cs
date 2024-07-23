@@ -63,9 +63,14 @@ namespace SMS.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Filiere>> GetFilieresByUnitOfFormationIdAsync(Guid unitId)
+        public Task<IEnumerable<Filiere>> GetFilieresByUnitOfFormationIdAsync(Guid unitId)
         {
-            return await _context.Filieres.Where(f => f.UnitOfFormationId == unitId).ToListAsync();
+            throw new NotImplementedException();
         }
+
+        //public async Task<IEnumerable<Filiere>> GetFilieresByUnitOfFormationIdAsync(Guid unitId)
+        //{
+        //    return await _context.Filieres.Where(f => f.UnitOfFormationId == unitId).ToListAsync();
+        //}
     }
 }
