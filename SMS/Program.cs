@@ -128,13 +128,26 @@ builder.Services.AddDbContext<FiliereDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 // Register MediatR
+//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
+//    Assembly.GetExecutingAssembly(),
+//    typeof(GetAllAbsencesQuery).Assembly,
+//    typeof(GetAllAbsencesHandler).Assembly,
+//    typeof(GetAllSeanceQuery).Assembly,
+//    typeof(GetAllSeanceHandler).Assembly
+//));
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
     Assembly.GetExecutingAssembly(),
     typeof(GetAllAbsencesQuery).Assembly,
     typeof(GetAllAbsencesHandler).Assembly,
     typeof(GetAllSeanceQuery).Assembly,
-    typeof(GetAllSeanceHandler).Assembly
+    typeof(GetAllSeanceHandler).Assembly,
+    typeof(GetSeanceByIdHandler).Assembly,
+    typeof(CreateSeanceHandler).Assembly,
+    typeof(UpdateSeanceHandler).Assembly,
+    typeof(DeleteSeanceHandler).Assembly
 ));
+
 
 // Register Repositories and Unit of Work
 builder.Services.AddScoped<IAbsenceRepository, AbsenceRepository>();

@@ -3,14 +3,12 @@ using SMS.Application.Commands.Seances;
 using SMS.Domain.Entities;
 using SMS.Domain.Interfaces;
 using System;
-using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SMS.Application.Handlers.Seances
 {
-    public class UpdateSeanceHandler
+    public class UpdateSeanceHandler : IRequestHandler<UpdateSeanceCommand, Unit>
     {
         private readonly ISeanceRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
