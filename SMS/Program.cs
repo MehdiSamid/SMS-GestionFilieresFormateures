@@ -116,11 +116,16 @@ using SMS.Application.Queries.Seances;
 using SMS.Application.Handlers;
 using SMS.Application.Mapping.SMS.Application.Mapping;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+.AddJsonOptions(options =>
+ {
+     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+ });
 
 // Configure DbContext with SQL Server
 builder.Services.AddDbContext<FiliereDbContext>(options =>

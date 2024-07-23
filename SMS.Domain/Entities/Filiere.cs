@@ -1,4 +1,6 @@
-﻿namespace SMS.Domain.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace SMS.Domain.Entities
 {
     public class Filiere : BaseEntity
     {
@@ -12,6 +14,7 @@
         public decimal MontantAnnuel { get; set; }
         public decimal MontantTrimestre { get; set; }
 
+        [JsonIgnore]
         public ICollection<FiliereUnitOfFormation> FiliereUnitOfFormations { get; set; }
     }
 }

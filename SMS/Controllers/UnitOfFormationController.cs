@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SMS.Application.DTOs.UnitOfFormations;
 using SMS.Application.Services;
+using SMS.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,14 @@ namespace SMS.Controllers
     public class UnitOfFormationController : ControllerBase
     {
         private readonly IUnitOfFormationService _service;
+        private readonly FiliereDbContext _context;
         private readonly IFiliereService _filiereService;
 
-        public UnitOfFormationController(IUnitOfFormationService service, IFiliereService filiereService)
+        public UnitOfFormationController(IUnitOfFormationService service, IFiliereService filiereService , FiliereDbContext context)
         {
             _service = service;
             _filiereService = filiereService;
+            _context = context;
         }
 
         [HttpGet]
@@ -46,13 +49,37 @@ namespace SMS.Controllers
             return Ok(units);
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> Create(AddUnitofFormationDto unitDto)
+        //{
+        //    var createdUnit = await _service.AddAsync(unitDto);
+        //    return CreatedAtAction(nameof(GetUnitOfFormationById), new { id = createdUnit.Id }, createdUnit);
+        //}
         [HttpPost]
         public async Task<IActionResult> Create(AddUnitofFormationDto unitDto)
         {
-            var createdUnit = await _service.AddAsync(unitDto);
-            return CreatedAtAction(nameof(GetUnitOfFormationById), new { id = createdUnit.Id }, createdUnit);
-        }
+            var unitOfFormation = new UnitOfFormation
+            {
+                Name = unitDto.Name,
+                Semestre = unitDto.Semestre,
+                Duration = unitDto.Duration,
+                Coefficient = unitDto.Coefficient
+            };
 
+            _context.UnitOfFormations.Add(unitOfFormation);
+            await _context.SaveChangesAsync();
+
+            var filiereUnitOfFormation = new FiliereUnitOfFormation
+            {
+                FiliereId = unitDto.FiliereId,
+                UnitOfFormationId = unitOfFormation.Id
+            };
+
+            _context.FiliereUnitOfFormations.Add(filiereUnitOfFormation);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetUnitOfFormationById), new { id = unitOfFormation.Id }, unitOfFormation);
+        }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUnitOfFormation(Guid id, UnitOfFormationDto unitDto)
         {
