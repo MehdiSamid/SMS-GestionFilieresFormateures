@@ -93,6 +93,8 @@ namespace SMS.Infrastructure.Migrations
                     IdUniteFormation = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdGroupe = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    hDebut = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    hFin = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IdSalle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdEmploi = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdFormateur = table.Column<string>(type: "nvarchar(max)", nullable: false),

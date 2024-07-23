@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SMS.Infrastructure.Migrations
 {
     [DbContext(typeof(FiliereDbContext))]
-    [Migration("20240718193715_initSeance")]
+    [Migration("20240723105225_initSeance")]
     partial class initSeance
     {
         /// <inheritdoc />
@@ -242,6 +242,12 @@ namespace SMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("hDebut")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("hFin")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");

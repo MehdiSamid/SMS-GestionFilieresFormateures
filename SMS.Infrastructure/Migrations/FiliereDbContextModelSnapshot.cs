@@ -241,6 +241,12 @@ namespace SMS.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("hDebut")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("hFin")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("Seances");
