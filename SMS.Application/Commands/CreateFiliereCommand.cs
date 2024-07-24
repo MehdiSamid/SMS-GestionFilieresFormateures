@@ -12,6 +12,7 @@ namespace SMS.Application.Commands
                                          string Niveau,
                                          int Duree,
                                          int Capacite,
+                                         int GroupCapacity , 
                                          decimal FraisInscription,
                                          decimal MontantMensuel,
                                          decimal MontantAnnuel,

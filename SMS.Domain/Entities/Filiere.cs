@@ -9,6 +9,7 @@ namespace SMS.Domain.Entities
         public string Niveau { get; set; }
         public int Duree { get; set; }
         public int Capacite { get; set; }
+        public int GroupCapacity { get; set; }
         public decimal FraisInscription { get; set; }
         public decimal MontantMensuel { get; set; }
         public decimal MontantAnnuel { get; set; }

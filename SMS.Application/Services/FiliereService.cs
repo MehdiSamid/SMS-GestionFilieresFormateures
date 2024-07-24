@@ -78,6 +78,7 @@ namespace SMS.Application.Services
                 Niveau = f.Niveau, // Assuming the entity's property is named `Level`
                 Duree = f.Duree, // Assuming the entity's property is named `Duration`
                 Capacite = f.Capacite, // Assuming the entity's property is named `Capacity`
+                GroupCapacity = f.GroupCapacity,
                 FraisInscription = f.FraisInscription, // Assuming the entity's property is named `RegistrationFee`
                 MontantMensuel = f.MontantMensuel, // Assuming the entity's property is named `MonthlyAmount`
                 MontantAnnuel = f.MontantAnnuel, // Assuming the entity's property is named `AnnualAmount`
