@@ -49,7 +49,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
     typeof(GetAllAbsencesHandler).Assembly,
     typeof(GetAllSeanceQuery).Assembly,
     typeof(GetAllSeanceHandler).Assembly,
-    typeof(CreateAbsenceHandler).Assembly
+    typeof(CreateAbsenceHandler).Assembly,
 
     typeof(GetSeanceByIdHandler).Assembly,
     typeof(CreateSeanceHandler).Assembly,
