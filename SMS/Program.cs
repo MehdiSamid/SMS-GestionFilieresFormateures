@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //using Microsoft.EntityFrameworkCore;
 //using Microsoft.OpenApi.Models;
 //using AutoMapper;
@@ -198,6 +199,8 @@
 //app.MapHealthChecks("/health");
 //app.Run();
 
+=======
+>>>>>>> 8738c67f59e9a520fb00cbea9c5683e48076eb3a
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using AutoMapper;
@@ -221,6 +224,8 @@ using SMS.Application.Handlers;
 using SMS.Application.Mapping.SMS.Application.Mapping;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json.Serialization;
+using SMS.Application.Queries.Emplois;
+using SMS.Application.Handlers.Emplois;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -229,6 +234,17 @@ builder.Services.AddControllers()
 .AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+});
+
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        builder => builder
+            .WithOrigins("http://localhost:5173")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
 });
 
 // Configure DbContext with SQL Server
@@ -240,20 +256,38 @@ builder.Services.AddDbContext<FiliereDbContext>(options =>
 // Register AutoMapper
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
-// Register MediatR
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
     Assembly.GetExecutingAssembly(),
     typeof(GetAllAbsencesQuery).Assembly,
     typeof(GetAllAbsencesHandler).Assembly,
     typeof(GetAllSeanceQuery).Assembly,
     typeof(GetAllSeanceHandler).Assembly,
+<<<<<<< HEAD
     typeof(CreateAbsenceHandler).Assembly
+=======
+    typeof(CreateAbsenceHandler).Assembly,
+
+    typeof(GetSeanceByIdHandler).Assembly,
+    typeof(CreateSeanceHandler).Assembly,
+    typeof(UpdateSeanceHandler).Assembly,
+    typeof(DeleteSeanceHandler).Assembly,
+
+    typeof(GetAllEmploisQuery).Assembly,
+    typeof(GetAllEmploiHandler).Assembly,
+    typeof(GetEmploiByIdHandler).Assembly,
+    typeof(CreateEmploiHandler).Assembly,
+    typeof(UpdateEmploiHandler).Assembly,
+    typeof(DeleteEmploiHandler).Assembly
+>>>>>>> 8738c67f59e9a520fb00cbea9c5683e48076eb3a
 ));
+
 
 // Register Repositories and Unit of Work
 builder.Services.AddScoped<IAbsenceRepository, AbsenceRepository>();
 builder.Services.AddScoped<ISeanceRepository, SeanceRepository>();
 builder.Services.AddScoped<IFormateurRepository, FormateurRepository>();
+builder.Services.AddScoped<IEmploiRepository, EmploiRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Register services
@@ -305,6 +339,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowReactApp"); // Use CORS policy
 app.UseAuthorization();
 
 // Use the CORS policy
@@ -312,4 +347,8 @@ app.UseCors("AllowAllOrigins");
 
 app.MapControllers();
 app.MapHealthChecks("/health");
+<<<<<<< HEAD
 app.Run();
+=======
+app.Run();
+>>>>>>> 8738c67f59e9a520fb00cbea9c5683e48076eb3a
