@@ -33,6 +33,17 @@ builder.Services.AddControllers()
      options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
  });
 
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        builder => builder
+            .WithOrigins("http://localhost:5173")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
+});
+
 // Configure DbContext with SQL Server
 builder.Services.AddDbContext<FiliereDbContext>(options =>
     options.UseSqlServer(
@@ -112,8 +123,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowReactApp"); // Use CORS policy
 app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
 app.Run();
-
