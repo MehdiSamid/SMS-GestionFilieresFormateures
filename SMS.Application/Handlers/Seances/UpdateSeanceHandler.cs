@@ -31,6 +31,7 @@ namespace SMS.Application.Handlers.Seances
             seance.IdUniteFormation = request.IdUniteFormation;
             seance.IdGroupe = request.IdGroupe;
             seance.Date = request.Date;
+            seance.SeanceIndex = request.SeanceIndex;
             seance.IdSalle = request.IdSalle;
             seance.IdEmploi = request.IdEmploi;
             seance.IdFormateur = request.IdFormateur;
