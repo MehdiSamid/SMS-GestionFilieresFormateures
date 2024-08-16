@@ -52,7 +52,7 @@ namespace SMS.Controllers
             {
                 return BadRequest();
             }
-
+            
             await _mediator.Send(command);
             return NoContent();
         }
