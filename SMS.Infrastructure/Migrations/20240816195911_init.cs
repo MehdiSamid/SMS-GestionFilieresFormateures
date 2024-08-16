@@ -12,27 +12,6 @@ namespace SMS.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Emplois",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    dateEmploi = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    groupe = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    semestre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Emplois", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Filieres",
                 columns: table => new
                 {
@@ -96,6 +75,7 @@ namespace SMS.Infrastructure.Migrations
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     hDebut = table.Column<DateTime>(type: "datetime2", nullable: false),
                     hFin = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SeanceIndex = table.Column<int>(type: "int", nullable: false),
                     IdSalle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdEmploi = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdFormateur = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -151,6 +131,39 @@ namespace SMS.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UnitOfFormations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Emplois",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    dateEmploi = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    groupe = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    semestre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    filiereId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdGroupe = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    nbrSeance = table.Column<int>(type: "int", nullable: false),
+                    breakStart = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    breakEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    breakRange = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Emplois", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Emplois_Filieres_filiereId",
+                        column: x => x.filiereId,
+                        principalTable: "Filieres",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -219,6 +232,11 @@ namespace SMS.Infrastructure.Migrations
                 name: "IX_Absences_idSeance",
                 table: "Absences",
                 column: "idSeance");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Emplois_filiereId",
+                table: "Emplois",
+                column: "filiereId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FiliereUnitOfFormations_UnitOfFormationId",

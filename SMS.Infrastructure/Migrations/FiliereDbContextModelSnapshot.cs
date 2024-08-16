@@ -85,6 +85,9 @@ namespace SMS.Infrastructure.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("IdGroupe")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -94,18 +97,35 @@ namespace SMS.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("breakEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("breakRange")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("breakStart")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("dateEmploi")
                         .HasColumnType("datetime2");
+
+                    b.Property<Guid>("filiereId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("groupe")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("nbrSeance")
+                        .HasColumnType("int");
 
                     b.Property<string>("semestre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("filiereId");
 
                     b.ToTable("Emplois");
                 });
@@ -301,6 +321,9 @@ namespace SMS.Infrastructure.Migrations
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SeanceIndex")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -414,6 +437,17 @@ namespace SMS.Infrastructure.Migrations
                     b.Navigation("Formateur");
 
                     b.Navigation("Seance");
+                });
+
+            modelBuilder.Entity("SMS.Domain.Entities.Emploi", b =>
+                {
+                    b.HasOne("SMS.Domain.Entities.Filiere", "filiere")
+                        .WithMany()
+                        .HasForeignKey("filiereId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("filiere");
                 });
 
             modelBuilder.Entity("SMS.Domain.Entities.FiliereUnitOfFormation", b =>

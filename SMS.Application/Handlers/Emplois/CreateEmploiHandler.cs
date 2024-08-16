@@ -3,6 +3,7 @@ using SMS.Application.Commands.Emplois;
 using SMS.Application.Commands.Seances;
 using SMS.Domain.Entities;
 using SMS.Domain.Interfaces;
+using System.Security.Cryptography;
 
 namespace SMS.Application.Handlers.Emplois
 {
@@ -19,11 +20,19 @@ namespace SMS.Application.Handlers.Emplois
 
         public async Task<Guid> Handle(CreateEmploiCommand request, CancellationToken cancellationToken)
         {
+            var breakRange = (int)(request.breakEnd - request.breakStart).TotalMinutes;
+
             var emploi = new Domain.Entities.Emploi
             {
                 dateEmploi = request.dateEmploi,
                 groupe = request.groupe,
                 semestre = request.semestre,
+                filiereId = request.filiereId,
+                IdGroupe = request.IdGroupe,
+                nbrSeance = request.nbrSeance,
+                breakStart = request.breakStart,
+                breakEnd = request.breakEnd,
+                breakRange = breakRange,
                 CreatedAt = DateTime.UtcNow
             };
 
