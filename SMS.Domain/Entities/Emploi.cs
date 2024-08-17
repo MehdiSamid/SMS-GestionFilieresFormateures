@@ -24,6 +24,10 @@ namespace SMS.Domain.Entities
 
         public int breakRange { get; set; }
 
+        public int SeanceDuration { get; set; }
+
+        public DateTime firstSeanceStart { get; set;}
+
         /*
         
         IdFiliere, IdGroupe, SeanceDuration, nbrSeance, breakTime (the time of the break ina w9ita), breakRange(nbr minute of break), StartingTime

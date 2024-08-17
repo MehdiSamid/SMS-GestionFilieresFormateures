@@ -147,6 +147,8 @@ namespace SMS.Infrastructure.Migrations
                     breakStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     breakEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
                     breakRange = table.Column<int>(type: "int", nullable: false),
+                    SeanceDuration = table.Column<int>(type: "int", nullable: false),
+                    firstSeanceStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),

@@ -33,6 +33,8 @@ namespace SMS.Application.Handlers.Emplois
                 breakStart = request.breakStart,
                 breakEnd = request.breakEnd,
                 breakRange = breakRange,
+                SeanceDuration = request.SeanceDuration,
+                firstSeanceStart = request.firstSeanceStart,
                 CreatedAt = DateTime.UtcNow
             };
 

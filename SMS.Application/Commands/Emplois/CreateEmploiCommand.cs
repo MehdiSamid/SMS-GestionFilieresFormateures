@@ -22,5 +22,8 @@ namespace SMS.Application.Commands.Emplois
 
         // Computed property
         public int breakRange { get; set; }
+        public int SeanceDuration { get; set; }
+
+        public DateTime firstSeanceStart { get; set; }
     }
 }
