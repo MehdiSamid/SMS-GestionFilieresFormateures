@@ -20,7 +20,7 @@ namespace SMS.Application.Handlers.Emplois
 
         public async Task<Guid> Handle(CreateEmploiCommand request, CancellationToken cancellationToken)
         {
-            var breakRange = (int)(request.breakEnd - request.breakStart).TotalMinutes;
+            //var breakRange = (int)(request.breakEnd - request.breakStart).TotalMinutes;
 
             var emploi = new Domain.Entities.Emploi
             {
@@ -32,7 +32,7 @@ namespace SMS.Application.Handlers.Emplois
                 nbrSeance = request.nbrSeance,
                 breakStart = request.breakStart,
                 breakEnd = request.breakEnd,
-                breakRange = breakRange,
+                breakRange = request.breakRange,
                 SeanceDuration = request.SeanceDuration,
                 firstSeanceStart = request.firstSeanceStart,
                 CreatedAt = DateTime.UtcNow

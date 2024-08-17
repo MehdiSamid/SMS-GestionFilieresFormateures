@@ -19,14 +19,14 @@ namespace SMS.Domain.Entities
 
         public Guid IdGroupe { get; set; }
         public int nbrSeance { get;set; }
-        public DateTime breakStart { get; set; }
-        public DateTime breakEnd { get; set; }
+        public int breakStart { get; set; }
+        public int breakEnd { get; set; }
 
         public int breakRange { get; set; }
 
         public int SeanceDuration { get; set; }
 
-        public DateTime firstSeanceStart { get; set;}
+        public int firstSeanceStart { get; set;}
 
         /*
         

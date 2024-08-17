@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SMS.Infrastructure.Migrations
 {
     [DbContext(typeof(FiliereDbContext))]
-    [Migration("20240817003622_init")]
+    [Migration("20240817170323_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -103,14 +103,14 @@ namespace SMS.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("breakEnd")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("breakEnd")
+                        .HasColumnType("int");
 
                     b.Property<int>("breakRange")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("breakStart")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("breakStart")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("dateEmploi")
                         .HasColumnType("datetime2");
@@ -118,8 +118,8 @@ namespace SMS.Infrastructure.Migrations
                     b.Property<Guid>("filiereId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("firstSeanceStart")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("firstSeanceStart")
+                        .HasColumnType("int");
 
                     b.Property<string>("groupe")
                         .IsRequired()
