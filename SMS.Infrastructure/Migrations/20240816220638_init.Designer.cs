@@ -13,6 +13,7 @@ namespace SMS.Infrastructure.Migrations
     [DbContext(typeof(FiliereDbContext))]
     [Migration("20240816220638_init")]
     partial class init
+>>>>>>>> 8738c67f59e9a520fb00cbea9c5683e48076eb3a:SMS.Infrastructure/Migrations/20240816195911_init.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -1,3 +1,206 @@
+<<<<<<< HEAD
+//using Microsoft.EntityFrameworkCore;
+//using Microsoft.OpenApi.Models;
+//using AutoMapper;
+//using MediatR;
+//using SMS.Application.Mapping;
+//using SMS.Application.Services;
+//using System.Reflection;
+//using SMS.Application.Commands.Absences;
+//using SMS.Domain.Interfaces;
+//using SMS.Infrastructure.Repositories;
+//using SMS.Infrastructure;
+//using SMS.Application.Handlers.Absences;
+//using SMS.Infrastructure.HealthChecks;
+//using SMS.Application.Handlers;
+//using SMS.Application.Mapping.SMS.Application.Mapping;
+//using SMS.Application.Queries.Absence;
+//using SMS.Application.Queries.Absences;
+//using SMS.Application.Queries.Seances;
+//using SMS.Application.Handlers.Seances;
+
+//var builder = WebApplication.CreateBuilder(args);
+
+//// Add services to the container.
+//builder.Services.AddControllers();
+
+//// Configure DbContext with SQL Server
+//builder.Services.AddDbContext<FiliereDbContext>(options =>
+//    options.UseSqlServer(
+//        builder.Configuration.GetConnectionString("DefaultConnection"),
+//        b => b.MigrationsAssembly("SMS.Infrastructure")));
+
+//// Register AutoMapper
+//builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
+//// Register MediatR
+//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
+//    Assembly.GetExecutingAssembly(),
+//    typeof(GetAllAbsencesQuery).Assembly,
+//    typeof(GetAllAbsencesHandler).Assembly
+//));
+
+//// Register Repositories and Unit of Work
+//builder.Services.AddScoped<IAbsenceRepository, AbsenceRepository>();
+//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+////---------------
+
+//// Register MediatR
+//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
+//    Assembly.GetExecutingAssembly(),
+//    typeof(GetAllSeanceQuery).Assembly,
+//    typeof(GetAllSeanceHandler).Assembly
+//));
+
+//// Register Repositories and Unit of Work
+//builder.Services.AddScoped<ISeanceRepository, SeanceRepository>();
+//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
+
+//// Register Application Services
+//builder.Services.AddScoped<FormateurService>();
+
+//// Enable Swagger
+//builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen(c =>
+//{
+//    c.SwaggerDoc("v1", new OpenApiInfo
+//    {
+//        Version = "v1",
+//        Title = "SMS API",
+//        Description = "API for Gestion des Filières et des Formateurs",
+//    });
+//});
+
+//// Add Health Checks
+//builder.Services.AddHealthChecks()
+//    .AddCheck<FiliereDbContextHealthCheck>("FiliereDbContext_Health_Check");
+
+//var app = builder.Build();
+
+//// Configure the HTTP request pipeline.
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseDeveloperExceptionPage();
+//    app.UseSwagger();
+//    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SMS API v1"));
+//}
+
+//app.UseHttpsRedirection();
+//app.UseAuthorization();
+//app.MapControllers();
+//app.MapHealthChecks("/health");
+//app.Run();
+
+
+//using Microsoft.EntityFrameworkCore;
+//using Microsoft.OpenApi.Models;
+//using AutoMapper;
+//using MediatR;
+//using SMS.Application.Mapping;
+//using SMS.Application.Services;
+//using System.Reflection;
+//using SMS.Application.Commands.Absences;
+//using SMS.Domain.Interfaces;
+//using SMS.Infrastructure.Repositories;
+//using SMS.Infrastructure;
+//using SMS.Infrastructure.HealthChecks;
+//using SMS.Domain.Entities;
+//using System.Reflection;
+//using Microsoft.AspNetCore.Hosting;
+//using SMS.Application.Handlers.Absences;
+//using SMS.Application.Handlers.Seances;
+//using SMS.Application.Queries.Absences;
+//using SMS.Application.Queries.Seances;
+//using SMS.Application.Handlers;
+//using SMS.Application.Mapping.SMS.Application.Mapping;
+//using Microsoft.Extensions.DependencyInjection;
+//using System.Text.Json.Serialization;
+
+//var builder = WebApplication.CreateBuilder(args);
+
+//// Add services to the container.
+//builder.Services.AddControllers()
+//.AddJsonOptions(options =>
+// {
+//     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+// });
+
+//// Configure DbContext with SQL Server
+//builder.Services.AddDbContext<FiliereDbContext>(options =>
+//    options.UseSqlServer(
+//        builder.Configuration.GetConnectionString("DefaultConnection"),
+//        b => b.MigrationsAssembly("SMS.Infrastructure")));
+
+//// Register AutoMapper
+//builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
+//// Register MediatR
+//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
+//    Assembly.GetExecutingAssembly(),
+//    typeof(GetAllAbsencesQuery).Assembly,
+//    typeof(GetAllAbsencesHandler).Assembly,
+//    typeof(GetAllSeanceQuery).Assembly,
+//    typeof(GetAllSeanceHandler).Assembly,
+//    typeof(CreateAbsenceHandler).Assembly
+
+//));
+
+//// Register Repositories and Unit of Work
+//builder.Services.AddScoped<IAbsenceRepository, AbsenceRepository>();
+//builder.Services.AddScoped<ISeanceRepository, SeanceRepository>();
+//builder.Services.AddScoped<IFormateurRepository, FormateurRepository>();
+//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+//// Register services
+//builder.Services.AddScoped<FormateurService>();
+//builder.Services.AddScoped<ISecteurRepository, SecteurRepository>();
+//builder.Services.AddScoped<IUnitOfFormationRepository, UnitOfFormationRepository>();
+//builder.Services.AddScoped<IFiliereService, FiliereService>();
+//builder.Services.AddScoped<IUnitOfFormationService, UnitOfFormationService>();
+//builder.Services.AddScoped<IFiliereRepository, FiliereRepository>();
+
+//// Register AutoMapper
+//builder.Services.AddAutoMapper(typeof(Program)); 
+
+//builder.Services.AddScoped<FiliereService>();
+
+//// Enable Swagger
+//builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen(c =>
+//{
+//    c.SwaggerDoc("v1", new OpenApiInfo
+//    {
+//        Version = "v1",
+//        Title = "SMS API",
+//        Description = "API for Gestion des Filières et des Formateurs",
+//    });
+//});
+
+//// Add Health Checks
+//builder.Services.AddHealthChecks()
+//    .AddCheck<FiliereDbContextHealthCheck>("FiliereDbContext_Health_Check");
+
+//var app = builder.Build();
+
+//// Configure the HTTP request pipeline.
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseDeveloperExceptionPage();
+//    app.UseSwagger();
+//    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SMS API v1"));
+//}
+
+//app.UseHttpsRedirection();
+//app.UseAuthorization();
+//app.MapControllers();
+//app.MapHealthChecks("/health");
+//app.Run();
+
+=======
+>>>>>>> 8738c67f59e9a520fb00cbea9c5683e48076eb3a
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using AutoMapper;
@@ -29,9 +232,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers()
 .AddJsonOptions(options =>
- {
-     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
- });
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+});
 
 // Configure CORS
 builder.Services.AddCors(options =>
@@ -60,6 +263,9 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
     typeof(GetAllAbsencesHandler).Assembly,
     typeof(GetAllSeanceQuery).Assembly,
     typeof(GetAllSeanceHandler).Assembly,
+<<<<<<< HEAD
+    typeof(CreateAbsenceHandler).Assembly
+=======
     typeof(CreateAbsenceHandler).Assembly,
 
     typeof(GetSeanceByIdHandler).Assembly,
@@ -73,6 +279,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
     typeof(CreateEmploiHandler).Assembly,
     typeof(UpdateEmploiHandler).Assembly,
     typeof(DeleteEmploiHandler).Assembly
+>>>>>>> 8738c67f59e9a520fb00cbea9c5683e48076eb3a
 ));
 
 
@@ -92,7 +299,7 @@ builder.Services.AddScoped<IUnitOfFormationService, UnitOfFormationService>();
 builder.Services.AddScoped<IFiliereRepository, FiliereRepository>();
 
 // Register AutoMapper
-builder.Services.AddAutoMapper(typeof(Program)); 
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddScoped<FiliereService>();
 
@@ -112,6 +319,15 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddHealthChecks()
     .AddCheck<FiliereDbContextHealthCheck>("FiliereDbContext_Health_Check");
 
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -125,6 +341,14 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors("AllowReactApp"); // Use CORS policy
 app.UseAuthorization();
+
+// Use the CORS policy
+app.UseCors("AllowAllOrigins");
+
 app.MapControllers();
 app.MapHealthChecks("/health");
+<<<<<<< HEAD
 app.Run();
+=======
+app.Run();
+>>>>>>> 8738c67f59e9a520fb00cbea9c5683e48076eb3a

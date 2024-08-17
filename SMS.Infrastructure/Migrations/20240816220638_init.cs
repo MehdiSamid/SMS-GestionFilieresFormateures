@@ -6,7 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SMS.Infrastructure.Migrations
 {
     /// <inheritdoc />
+<<<<<<<< HEAD:SMS.Infrastructure/Migrations/20240723130349_initial.cs
+    public partial class initial : Migration
+========
     public partial class init : Migration
+>>>>>>>> 8738c67f59e9a520fb00cbea9c5683e48076eb3a:SMS.Infrastructure/Migrations/20240816195911_init.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
