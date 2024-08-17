@@ -26,7 +26,7 @@ namespace SMS.Controllers
         {
             var id = await _mediator.Send(command);
             //return CreatedAtAction(nameof(GetEmploiById), new { id }, null);
-            return Ok(command);
+            return CreatedAtAction(nameof(GetEmploiById), new { id }, new { id, emploi = command });
         }
 
         [HttpGet("{id}")]
