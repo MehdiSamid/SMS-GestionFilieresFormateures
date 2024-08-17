@@ -25,7 +25,8 @@ namespace SMS.Controllers
         public async Task<IActionResult> CreateEmploi([FromBody] CreateEmploiCommand command)
         {
             var id = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetEmploiById), new { id }, null);
+            //return CreatedAtAction(nameof(GetEmploiById), new { id }, null);
+            return Ok(command);
         }
 
         [HttpGet("{id}")]
