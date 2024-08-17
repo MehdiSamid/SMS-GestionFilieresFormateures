@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //using Microsoft.EntityFrameworkCore;
 //using Microsoft.OpenApi.Models;
 //using AutoMapper;
@@ -199,8 +198,6 @@
 //app.MapHealthChecks("/health");
 //app.Run();
 
-=======
->>>>>>> 8738c67f59e9a520fb00cbea9c5683e48076eb3a
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using AutoMapper;
@@ -263,9 +260,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
     typeof(GetAllAbsencesHandler).Assembly,
     typeof(GetAllSeanceQuery).Assembly,
     typeof(GetAllSeanceHandler).Assembly,
-<<<<<<< HEAD
-    typeof(CreateAbsenceHandler).Assembly
-=======
+    typeof(CreateAbsenceHandler).Assembly,
     typeof(CreateAbsenceHandler).Assembly,
 
     typeof(GetSeanceByIdHandler).Assembly,
@@ -279,7 +274,6 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
     typeof(CreateEmploiHandler).Assembly,
     typeof(UpdateEmploiHandler).Assembly,
     typeof(DeleteEmploiHandler).Assembly
->>>>>>> 8738c67f59e9a520fb00cbea9c5683e48076eb3a
 ));
 
 
@@ -347,8 +341,5 @@ app.UseCors("AllowAllOrigins");
 
 app.MapControllers();
 app.MapHealthChecks("/health");
-<<<<<<< HEAD
 app.Run();
-=======
 app.Run();
->>>>>>> 8738c67f59e9a520fb00cbea9c5683e48076eb3a
