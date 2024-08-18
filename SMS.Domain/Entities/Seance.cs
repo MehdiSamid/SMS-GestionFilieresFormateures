@@ -19,5 +19,6 @@ namespace SMS.Domain.Entities
         public string IdSalle { get; set; }
         public string IdEmploi { get; set; }
         public string IdFormateur { get; set; }
+        public int DayIndex { get; set; }
     }
 }

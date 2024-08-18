@@ -25,7 +25,8 @@ namespace SMS.Controllers
         public async Task<IActionResult> CreateSeance([FromBody] CreateSeanceCommand command)
         {
             var id = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetSeanceById), new { id }, null);
+            //return CreatedAtAction(nameof(GetSeanceById), new { id }, null);
+            return CreatedAtAction(nameof(GetSeanceById), new { id }, new { id, seance = command });
         }
 
         [HttpGet("{id}")]

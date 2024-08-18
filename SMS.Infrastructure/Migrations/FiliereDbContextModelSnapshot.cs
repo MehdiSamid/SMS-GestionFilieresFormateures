@@ -291,6 +291,9 @@ namespace SMS.Infrastructure.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("DayIndex")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 

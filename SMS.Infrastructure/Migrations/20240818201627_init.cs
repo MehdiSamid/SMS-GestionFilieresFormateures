@@ -79,6 +79,7 @@ namespace SMS.Infrastructure.Migrations
                     IdSalle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdEmploi = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdFormateur = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DayIndex = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),

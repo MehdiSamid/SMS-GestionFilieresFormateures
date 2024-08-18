@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SMS.Infrastructure.Migrations
 {
     [DbContext(typeof(FiliereDbContext))]
-    [Migration("20240817170323_init")]
+    [Migration("20240818201627_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -293,6 +293,9 @@ namespace SMS.Infrastructure.Migrations
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("DayIndex")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");

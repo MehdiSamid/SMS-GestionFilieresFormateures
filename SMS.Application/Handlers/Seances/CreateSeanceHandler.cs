@@ -30,6 +30,7 @@ namespace SMS.Application.Handlers.Seances
                 IdSalle = request.IdSalle,
                 IdEmploi = request.IdEmploi,
                 IdFormateur = request.IdFormateur,
+                DayIndex = request.DayIndex,
                 CreatedAt = DateTime.UtcNow
             };
 
